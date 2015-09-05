@@ -1,0 +1,268 @@
+<div class="col-sm-12 col-md-12 col-lg-12" >
+  <ol class="breadcrumb">
+        <li><a href="/">Imobcat</a></li>
+        <li>Cadastro</li>
+        <li class="active">Imóveis</li>
+  </ol>
+	<h1 class="sub-header">{{entidade}}</h1>
+	<div class="btn-group">
+		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+		<ul class="dropdown-menu " role="menu">
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'false'});"> <img src="/img/icons/json.png" width="24px"> JSON</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"> <img src="/img/icons/json.png" width="24px"> JSON (ignoreColumn)</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'true'});"> <img src="/img/icons/json.png" width="24px"> JSON (with Escape)</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'xml',escape:'false'});"> <img src="/img/icons/xml.png" width="24px"> XML</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'sql'});"> <img src="/img/icons/sql.png" width="24px"> SQL</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'csv',escape:'false'});"> <img src="/img/icons/csv.png" width="24px"> CSV</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'txt',escape:'false'});"> <img src="/img/icons/txt.png" width="24px"> TXT</a></li>
+			<li class="divider"></li>				
+			
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'excel',escape:'false'});"> <img src="/img/icons/xls.png" width="24px"> XLS</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'doc',escape:'false'});"> <img src="/img/icons/word.png" width="24px"> Word</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'powerpoint',escape:'false'});"> <img src="/img/icons/ppt.png" width="24px"> PowerPoint</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'png',escape:'false'});"> <img src="/img/icons/png.png" width="24px"> PNG</a></li>
+			<li><a href="#" onclick="$('#accordion').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> <img src="/img/icons/pdf.png" width="24px"> PDF</a></li>
+			
+			
+		</ul>
+	</div>
+	<table class="table table-bordered table-striped" ng-init="cliente=true">
+		<thead>
+			<tr>
+			  <th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='id'; reverse=!reverse" role="button">
+					ID 
+					</a><a data-ng-show="sortBy=='id'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='tipoimovel'; reverse=!reverse" role="button">
+					Tipo
+					</a><a data-ng-show="sortBy=='tipoimovel'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-5 col-md-5 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='endereco'; reverse=!reverse" role="button">
+					Endere&ccedil;o 
+					</a><a data-ng-show="sortBy=='endereco'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-2 col-md-2 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='proprietario'; reverse=!reverse" role="button">
+					Propriet&aacute;rio 
+					</a><a data-ng-show="sortBy=='proprietario'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='updated'; reverse=!reverse" role="button">
+					Altera&ccedil;&atilde;o
+					</a><a data-ng-show="sortBy=='proprietario'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>	
+				<th class="col-xs-2 col-md-2 text-center">
+					<div class="inline">					
+						<a href="/cadastro/imoveis/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
+					</div>	
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="accordion-toggle" data-target="#collapse{{item.cpf}}" > -->
+			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
+								
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.id}}</td>
+				<td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.tipoImovel}}</td>
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">
+            <address>
+            <strong>{{item.endereco.rua}} {{item.endereco.numero}}/{{item.endereco.complemento}}, {{item.endereco.bairro}} </strong><br>
+            {{item.endereco.cidade}}/{{item.endereco.uf}} - CEP:{{item.endereco.cep}} - {{item.endereco.pais}}
+            </address>
+				</td>
+				<td class="text-center text-capitalize clickpointer"  data-toggle="modal" data-target="#myModal">
+				  <h4><strong>{{item.proprietarios[0].tipo}}</strong></h4>
+				  <h5>{{item.proprietarios[0].cpf}}</h5>
+				</td>
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.updated}}</td>
+				<td class="text-center">
+					<a class="btn btn-primary " href="/cadastro/imoveis/edit/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
+					<a class="btn btn-danger ng-hide" data-ng-click="removeImovel(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
+				</td>
+				
+			
+			</tr>
+			<!-- 
+			<tr data-ng-repeat-end>
+				<td colspan="4" class="hiddenRow">				
+				    <div class="accordion-body collapse" id="collapse{{item.cpf}}" >
+					 <h3>Documentos:</h3>
+					 <div class="btn-group" data-ng-class="{open: open}">
+						<button class="btn">Filtrar: </button>
+						<button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span>
+				
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+						    <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>
+				
+						    </li>
+						    <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>
+				
+						    </li>
+						    <li class="divider"></li>
+						    <li data-ng-repeat="tipoDoc in tipoDocList"> 
+							<a data-ng-click="setSelectedDocTypes()">{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i>
+							</a>	
+						    </li>
+						</ul>
+					 </div>		
+					 <table class="table table-hover table-striped">
+						<thead>
+						    <tr>
+							<th style="width:10%">#</th>
+							<th style="width:10%">Tipo</th>
+							<th style="width:30%">Nome</th>
+							<th style="width:40%">Descri&ccedil;&atilde;o</th>
+							<th style="width:10%">Link</th>
+						    </tr>
+						</thead>
+						<tbody>
+						    <tr data-ng-repeat="documento in filtered = (item.documentos | docFilter:formatosSelecionados)">
+							<td>{{documento.id}}</td>
+							<td><em>{{documento.tipo}}</em></td>
+							<td><em>{{documento.nome}}</em></td>
+							<td>{{documento.descricao}}</td>
+							<td><a href="{{documento.link}}"><i class="fa fa-file-o fa-2x"></i> </a></td>
+						    </tr>
+						</tbody>
+					 </table>			    
+				    </div>
+				</td>
+			</tr>-->
+		</tbody>
+	</table>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title-success" id="myModalLabel"><span class="label label-success label-lg">{{selected.id}} - {{selected.titulo}}</span></h4>
+      </div>
+      <div class="modal-body">
+      	<div class="container-fluid">
+      	   <div class="well">		
+              <div>
+                  <span><strong>Propriet&aacute;rios</strong></span>
+                  <ul class="list-group">
+                    <li class="list-group-item list-group-item-default" data-ng-repeat="prop in selected.proprietarios">
+                      <p class="bg-default">{{prop.tipo}}: <span class="badge">{{prop.cpf}}</span></p>				
+                    </li>
+                  </ul>
+              </div>
+              
+              <div class="row text-center text-capitalize">              
+                  <div class="col-xs-6 col-md-6">
+                    <span><strong>Tipo do Im&oacute;vel</strong></span>
+                    <br>
+                    <div class="panel panel-default text-center">
+                      <strong>{{selected.tipoImovel}}</strong>           
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-md-6">
+                    <span><strong>Situação do Im&oacute;vel</strong></span>
+                    <br>
+                    <div class="panel panel-default text-center">
+                      <div data-ng-class="{'bg-danger': (selected.tipoSituacao === 'indisponivel'), 'bg-warning': (selected.tipoSituacao === 'aliberar'), 'bg-success': (selected.tipoSituacao === 'liberado')}">
+                      <strong>{{selected.tipoSituacao}}</strong>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="row text-center text-capitalize">  
+                 <div class="col-xs-6 col-md-6">                 
+                      <span><strong>Título do Im&oacute;vel</strong></span>                      
+                      <div class="panel panel-default text-center">
+                          <strong>{{selected.titulo}}</strong>
+                      </div>
+                    
+                      <span><strong>Descri&ccedil;&atilde;o Completa</strong></span>     
+                      <div class="panel panel-default text-center">
+                          {{selected.descricao}}
+                      </div>                 
+                 </div>
+                 <div class="col-xs-6 col-md-6">
+                    <span><strong>Endere&ccedil;o</strong></span>
+                    <address class="panel panel-default text-center">
+                          <strong>{{selected.endereco.rua}} {{selected.endereco.numero}}/{{selected.endereco.complemento}}, {{selected.endereco.bairro}} </strong><br>
+                          {{selected.endereco.cidade}}/{{selected.endereco.uf}} - CEP:{{selected.endereco.cep}} - {{selected.endereco.pais}}
+                    </address>                    
+                 </div>
+            </div>
+          </div>
+		
+          <div class="row">
+              <div class="well col-md-12">
+                <span class="label label-info col-md-2">Documentos</span>
+                <div class="btn-group" data-ng-class="{open: open}">
+                  <button class="btn">Filtrar: </button>
+                  <button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span>
+                  
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                      <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>
+                  
+                      </li>
+                      <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>
+                  
+                      </li>
+                      <li class="divider"></li>
+                      <li data-ng-repeat="tipoDoc in tipoDocList" data-ng-init="checkAll()" >				    	
+                    <a data-ng-click="setSelectedDocTypes()" >{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i>
+                    </a>	
+                      </li>
+                  </ul>
+                </div>		
+                <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                  <th class=".col-md-1 .col-lg-1">#</th>
+                  <th class=".col-sm-2 .col-md-1 .col-lg-1">Tipo</th>
+                  <th class=".col-xs-10 .col-sm-8 .col-md-3 .col-lg-3">Nome</th>
+                  <th class=".col-md-6 .col-lg-6">Descri&ccedil;&atilde;o</th>
+                  <th class=".col-xs-2 .col-sm-2 .col-md-1 .col-lg-1">Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="documento in filtered = (selected.documentos | docFilter:formatosSelecionados)">
+                  <td>{{documento.id}}</td>
+                  <td><em>{{documento.tipo}}</em></td>
+                  <td><em>{{documento.nome}}</em></td>
+                  <td>{{documento.descricao}}</td>
+                  <td><a href="{{documento.link}}"><i class="fa fa-file-o fa-2x"></i> </a></td>
+                    </tr>
+                </tbody>
+                </table>		 
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">		
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/tableExport.js"></script>
+<script type="text/javascript" src="/js/jquery.base64.js"></script>
+<script type="text/javascript" src="/js/html2canvas.js"></script>
+<script type="text/javascript" src="/js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="/js/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="/js/jspdf/libs/base64.js"></script>

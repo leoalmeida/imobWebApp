@@ -1,0 +1,59 @@
+<div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <ol class="breadcrumb">
+                <li><a href="/">Imobcat</a></li>
+                <li class="active">Sincronização</li>
+            </ol>
+        </div>
+        
+        <div class="col-md-8 col-md-offset-2">          
+              <div class="list-group-item list-group-item-{{msgInformativa.type}} text-center">
+                  <strong>
+                  <span data-ng-show="percDone<100"><i class="fa fa-refresh fa-spin"></i>Sincronizando</span>  {{msgInformativa.text}}
+                  </strong>
+              </div>
+        </div>
+</div>        
+<div class="row">        
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading clickpointer"  ng-click="showDetalhes = !showDetalhes" >
+                  <div class="row">                  
+                    <div class="col-xs-10 col-md-11">
+                        <div class="text-center"><h3><strong>Eventos Enviados: <span class="badge">{{syncedQtd}}/{{syncSize}}</span></strong></h3></div>
+                        <div class="text-center"><h3><strong>Eventos Recebidos: <span class="badge">0/0</span></strong></h3></div>
+                    </div>                    
+                    <div class="col-xs-2 col-md-1" >
+                      <span class="fa fa-caret-down" data-ng-show="showDetalhes" tooltip="Detalhamento" tooltip-trigger="mouseenter"></span>                    
+                      <span class="fa fa-caret-right" data-ng-hide="showDetalhes" tooltip="Detalhamento" tooltip-trigger="mouseenter"></span>
+                    </div>                    
+                  </div>
+                </div>
+                <div class="panel-body" collapse="!showDetalhes">                                                                   
+                      <div class="row">                              
+                          <div class="col-xs-offset-1 col-xs-10">
+                              <progressbar class="progress-striped active" value="percDone" type="warning" ><span style="font: italic bold;color:black; white-space:nowrap;">{{percDone}}%</span></progressbar>
+                          </div>                          
+                      </div>
+                </div>
+                <table class="table table-striped"  data-ng-show="showDetalhes">                  
+                    <thead>
+                      <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Informação</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">Título</th>	
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-ng-repeat="item in syncedItems" data-ng-class="{warning: (item.situacao === 'conflito')}">
+                        <td class="text-center text-capitalize"><strong>{{$index + 1}}</strong></td>
+                        <td class="text-center text-capitalize"><strong>{{item.type}}</strong></td>                        
+                        <td class="text-center text-capitalize">{{item.subtype}}</td>
+                        <td class="text-center">{{item.title}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>            
+        </div>
+ </div>

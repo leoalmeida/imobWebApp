@@ -1,0 +1,286 @@
+	
+  <ol class="breadcrumb">
+      <li><a href="/">Imobcat</a></li>
+      <li>Cadastro</li>
+      <li><a href="/cadastro/contratos">Contratos</a></li>
+      <li class="active">Formulário de Contratos</li>
+  </ol>	<h1 class="sub-header">{{entidade}}</h1>
+	
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
+	
+	<form name="myForm" novalidate class="form-horizontal" role="form">
+	    <div class="row">
+          <div class="col-xs-8 col-md-8">
+              <!-- TIPO DE CONTRATO -->
+              <div class="form-group">
+                    <div class="row">
+                        <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Contrato</label>
+                        <div class="col-xs-9 col-md-9">
+                          <div class="row">                            
+                            <div class="btn-group btn-group-justified">
+                                <label data-ng-repeat="tpcontrato in tiposContrato" class="btn btn-primary text-capitalize" ng-model="novocontrato.tipoContrato" btn-radio="'{{tpcontrato.subtipo}}'"><strong><i data-ng-show="novocontrato.tipoContrato===tpcontrato.subtipo" class="fa fa-paw"></i>&nbsp;{{tpcontrato.valor}}</strong></label>                                                     
+                            </div>                                       
+                          </div>                          
+                        </div>
+                        <div class="col-xs-1 col-md-1">
+                            <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.tipoContrato.$error.required">Obrigat&oacute;rio!</span>
+                        </div>
+                    </div>
+              </div>
+              <!-- RELAÇÕES DO CONTRATO -->
+              <!-- IMÓVEL -->
+              <div class="form-group">
+                  <div class="row">
+                      <label for="tipo" class="col-xs-2 col-md-2 control-label">Imóvel</label>
+                      <div class="col-xs-9 col-md-9">
+                          <div class="row">                          
+                            <div class="col-xs-3 col-md-3" role="group">
+                              <div class="row">                                 
+                                <div class="input-group" role="group">	
+                                  <input type="text" class="form-control" data-ng-model="imovel.obj.id" required="required" readonly />
+                                  <div class="input-group-btn" role="group">
+                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                      </button>
+                                      <ul id="imovelList" class="dropdown-menu" role="menu">
+                                        <li class="text-capitalize" data-ng-repeat="imvl in imoveisList" data-ng-click="imovel.obj = imvl">{{imvl.id}}: {{imvl.tipoImovel}}/{{imvl.endereco.bairro}}</li>                                     
+                                      </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <p></p>
+                              <div class="row">  
+                                  <button data-ng-show="imovel.obj.endereco" popover-placement="top" popover="Imóvel: {{imovel.obj.id}} - {{imovel.obj.endereco | formatoEndereco}}" popover-append-to-body="true" popover-trigger="focus" class="btn btn-info btn-sm btn-block text-capitalize">                                
+                                    <i class="fa fa-info fa-fw"></i>&nbsp;Endere&ccedil;o Completo
+                                  </button>
+                              </div>   
+                            </div>
+                            
+                            <!-- LOCADORES -->
+                            <div class="col-xs-9 col-md-9">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Lista de Locadores</div>
+                                    <div class="panel-body">                                   
+                                       <button popover-placement="top" popover="{{locad.nome}}" popover-append-to-body="true" popover-trigger="focus" class="btn btn-info btn-block text-capitalize" data-ng-repeat="locad in imovel.obj.proprietarios" >{{locad.tipo}} : {{locad.identificador}}<i class="fa fa-info pull-left"></i></button>                                                               
+                                    </div>
+                                </div>                              
+                            </div>
+                          </div>
+                      </div>
+                      <div class="col-xs-1 col-md-1">
+                          <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.proprietarios.$error.required">Obrigat&oacute;rio!</span>
+                      </div>
+                  </div>
+              </div>
+              <!-- LOCATÁRIOS -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Locatários</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="row">
+                          <div class="col-xs-3 col-md-3" role="group"> 
+                              <div class="row">                           
+                                <div class="input-group" role="group">	
+                                  <input type="text" class="form-control" data-ng-model="locatario.obj.cpf" required="required" readonly />
+                                  <div class="input-group-btn" role="group">
+                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                      </button>
+                                      <ul id="locList" class="dropdown-menu" role="menu">                                        
+                                        <li data-ng-repeat="itemCliente in clientesList | filter:filter"  data-ng-click="locatario.obj = itemCliente" >{{itemCliente.cpf}}</li>                                        
+                                      </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <p></p>
+                              <div class="row">  
+                                <button data-ng-click="incluirLocatario()" class="btn btn-primary btn-sm btn-block" >
+                                  <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                </button>
+                              </div>                              
+                          </div>
+                          <div class="col-xs-9 col-md-9"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Lista de Locatários</div>
+                                <div class="panel-body">                                      
+                                      <button popover-placement="top" popover="{{locat.nome}}" popover-append-to-body="true" popover-trigger="focus" class="btn btn-info btn-block text-capitalize"  ng-repeat="locat in novocontrato.locatarios">
+                                            <div class="close" aria-label="Close" data-ng-click="removeLocatario($index)"><i class="fa fa-times-circle-o fa-lg fa-fw" aria-hidden="true"></i></div>                                            
+                                            <span ng-if="$index===0" ng-init="locat.tipo = 'Principal'"> {{locat.tipo}}: {{locat.cpf}}</span>
+                                            <span ng-if="$index!==0" ng-init="locat.tipo = 'Adicional'"> {{locat.tipo}}: {{locat.cpf}}</span>
+                                            <i class="fa fa-info pull-left"></i>
+                                      </button>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.locatarios.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              <!-- FIADORES -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Fiadores</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="row">                          
+                          <div class="col-xs-3 col-md-3" role="group">
+                              <div class="row">  
+                                  <div class="input-group" role="group">
+                                    <input type="text" class="form-control" data-ng-model="fiador.obj.cpf" required="required" readonly />
+                                    <div class="input-group-btn" role="group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul id="fiaList" class="dropdown-menu" role="menu">
+                                            <li data-ng-repeat="itemFiador in clientesList | filter:filter"  data-ng-click="fiador.obj = itemFiador">{{itemFiador.cpf}}</li>                                                                          
+                                        </ul>
+                                    </div>
+                                  </div>
+                              </div>
+                              <p></p>
+                              <div class="row">  
+                                  <button data-ng-click="incluirFiador()" class="btn btn-primary btn-sm btn-block" >
+                                    <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                  </button>
+                              </div>
+                          </div>
+                          <div class="col-xs-9 col-md-9"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Lista de Fiadores</div>
+                                <div class="panel-body">
+                                      <button popover-placement="top" popover="{{fia.nome}}" popover-append-to-body="true" popover-trigger="focus" class="btn btn-info btn-block text-capitalize"  data-ng-repeat="fia in novocontrato.fiadores">
+                                          <div class="close" aria-label="Close" data-ng-click="removeFiador($index)"><i class="fa fa-times-circle-o fa-lg fa-fw" aria-hidden="true"></i></div>
+                                          <span ng-if="$index===0" ng-init="fia.tipo = 'Principal'"> {{fia.tipo}}: {{fia.cpf}}</span>
+                                          <span ng-if="$index!==0" ng-init="fia.tipo = 'Adicional'"> {{fia.tipo}}: {{fia.cpf}}</span>
+                                          <i class="fa fa-info pull-left"></i>
+                                      </button>                                
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.fiadores.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+                
+              <!-- SITUAÇÃO DO EVENTO 
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Situa&ccedil;&atilde;o</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="btn-group btn-group-justified" >
+                            <label data-ng-repeat="tpsituac in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novocontrato.situacao" btn-radio="'{{tpsituac.subtipo}}'">{{tpsituac.valor}}</label>                    
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.tpsituac.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>-->
+              
+          </div>         
+          <div class="col-xs-4 col-md-4">    
+                   <!-- DATA DE VENCIMENTO DO EVENTO -->
+                  <div class="form-group">                
+                      <div><label for="nome" class="control-label">Data de Vencimento</label></div>                  
+                      <div style="display:inline-block; min-height:290px;">
+                           <datepicker ng-model="picker" show-weeks="false" class="well well-sm"></datepicker>                       
+                      </div>
+                      <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.dataVencimento.$error.required">Obrigat&oacute;rio!</span>
+                  </div>
+          </div>
+      </div>
+      
+      
+      <!-- Documentação -->
+      <!--
+      <div class="row">     
+        <div class="col-xs-12">          
+          <div class="panel panel-body panel-default">
+            <legend>
+                  <label for="documents" class="control-label">Documentação</label>                          
+            </legend>
+            <div>
+                <div id="actions" class="row">                      
+                    <div class="col-xs-12">                      
+                        <button class="btn btn-primary" id="submit-all">
+                              <i class="glyphicon glyphicon-upload"></i>
+                              <span>Enviar arquivos</span>
+                        </button>
+                        <button class="btn btn-warning" id="cancel-all">
+                              <i class="glyphicon glyphicon-ban-circle"></i>
+                              <span>Cancelar Todos</span>
+                        </button>
+                    </div>
+                    <br/>   
+                    <div class="col-xs-12">                        
+                        <span class="fileupload-process">
+                          <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress=""></div>
+                          </div>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="dropzone" dropzone="dropzoneConfig" id="uploadSection">
+                
+                  <div  class="dz-default dz-message">
+                    <span> <img src="./img/gaveteirodigital.png" /> Arraste aqui os documentos!</span>                    
+                  </div>
+                  
+                </div>
+                    
+                <!--<div class="table table-striped" class="files" dropzone="dropzoneConfig" id="previews">
+                    <div id="template" class="file-row">
+                      <div class="col-xs-3">
+                          <span class="preview"><img data-dz-thumbnail /></span>
+                      </div>
+                      <div class="col-xs-3">
+                          <p class="name" data-dz-name></p>
+                          <strong class="error text-danger" data-dz-errormessage></strong>
+                      </div>
+                      <div class="col-xs-6">
+                          <p><span class="size" data-dz-size></span><span class="size" data-dz-uploadprogress></span></p>                        
+                          <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                          </div>
+                      </div>
+                      <div>
+                        <button class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Start</span>
+                        </button>                      
+                        <button data-dz-remove class="btn btn-warning cancel">
+                          <i class="glyphicon glyphicon-ban-circle"></i>
+                          <span>Cancel</span>
+                        </button>
+                        <button data-dz-remove class="btn btn-danger delete">
+                          <i class="glyphicon glyphicon-trash"></i>
+                          <span>Delete</span>
+                        </button>
+                      </div>
+                    </div>                         
+                </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+      -->
+      <div class="form-group">
+            <div class="row">
+            <div class="col-xs-offset-2 col-md-offset-2 col-xs-8 col-md-8">			
+              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-1 col-md-offset-1 col-xs-4 col-md-4" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
+              <a class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-4 col-md-4" href="/cadastro/contratos"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
+            </div>
+            </div>
+      </div>
+	
+	</form>

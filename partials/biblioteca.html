@@ -1,0 +1,188 @@
+<div class="biblioteca">
+
+    <h1 class="page-header">Biblioteca Virtual</h1> 
+    
+    <div id="dropper">
+        <div class="dropzone"><img src="img/upload.svg"></div>
+    </div>    
+    
+    <section class="container-fluid">
+        <div class="row">                         
+              <div class="col-sm-offset-1 col-sm-10">
+                    <div class="input-group input-group-lg" role="search">
+                      <input type="search" id="filterField" class="form-control" placeholder="Buscar..."  ng-model="filter">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search fa-fw"></i>
+                        </button>
+                      </span>
+                    </div>
+              </div>                        
+        </div>        
+        <div class="row">
+            <nav   class="col-md-2">
+                <button class="btn" id="close-button" title="Close">&lt;</button>
+                <div class="well">
+                    <h3 class="sub-header">Categorias</h3>
+                    <div class="row">                      
+                          <div class="col-xs-12">
+                              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Clientes">
+                                      <input type="checkbox" autocomplete="off" > <i class="fa fa-group fa-fw"></i>
+                                    </label>
+                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Imóveis">
+                                      <input type="checkbox" autocomplete="off" ><i class="fa fa-building fa-fw"></i>
+                                    </label>
+                              </div>
+                          </div>
+                          <div class="col-xs-12">
+                              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Contratos">
+                                      <input type="checkbox" autocomplete="off" > <i class="fa fa-legal fa-fw"></i>
+                                    </label>
+                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Eventos">
+                                      <input type="checkbox" autocomplete="off" ><i class="fa fa-flag fa-fw"></i>
+                                    </label>
+                              </div>
+                          </div>
+                    </div>
+                    
+                    <h3 class="sub-header">Tipos de Mídia</h3>
+                    <div class="row">                                          
+                        <div class="col-xs-12">
+                          <div class="btn-group btn-group-justified" data-toggle="buttons">
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="Excel">
+                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/xls.png" width="24px">
+                            </label>
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="Word">
+                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/word.png" width="24px">
+                            </label>
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="PowerPoint">
+                              <input type="checkbox" autocomplete="off"><img src="/img/icons/ppt.png" width="24px">
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="btn-group btn-group-justified" data-toggle="buttons">
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="TXT">
+                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/txt.png" width="24px">
+                            </label>
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="CSV">
+                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/csv.png" width="24px">
+                            </label>
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="PDF">
+                              <input type="checkbox" autocomplete="off"><img src="/img/icons/pdf.png" width="24px">
+                            </label>                          
+                          </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="btn-group btn-group-justified" data-toggle="buttons">
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="Imagem">
+                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/png.png" width="24px">
+                            </label>
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="JSON">
+                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/json.png" width="24px">
+                            </label>
+                            <label class="btn" data-toggle="tooltip" data-placement="down" title="XML">
+                              <input type="checkbox" autocomplete="off"><img src="/img/icons/xml.png" width="24px">
+                            </label>                          
+                          </div>
+                        </div>
+                    </div>                
+                </div> 
+            </nav>
+            <div id="main" class="col-sm-12 col-md-10">
+              <nav>
+                <h2>Google Drive Uploader</h2>
+                <button id="authorize-button" class="btn" data-ng-click="toggleAuth(true)">{{authButtonLabel()}}</button>
+                <button class="btn" data-ng-click="fetchDocs(flase)">Refresh</button>
+              </nav>
+              <progress></progress>
+              <ul>
+                <li data-ng-repeat="doc in docs">
+                  <!-- crbug.com/120693. Anchors need target="_blank", but <base> is taking care of this for us :) -->
+                  <img data-ng-src="{{doc.icon}}"> <a href="{{doc.alternateLink}}">{{doc.title}}</a>  {{doc.size}}
+                  <span class="date">{{doc.updatedDate}}</span>
+                </li>
+              </ul>
+            </div>
+        </div>
+    </section>    
+</div>
+
+
+
+        <!--<div class="dashboard col-xs-12 col-sm-9 col-md-9 col-lg-10">
+            <h2 class="sub-header">Arquivos Encontrados</h2>
+            <div class="table-responsive">
+              <table class="table table-striped tabledash">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-1 col-md-1 text-center">
+                        <h4>
+                        <a data-ng-click="sortBy='contrato'; reverse=!reverse" role="button">
+                        Campo 1 
+                        </a><a data-ng-show="sortBy=='contrato'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                        </h4>					
+                      </th>					
+                      <th class="col-xs-2 col-md-2 text-center">
+                        <h4>
+                        <a data-ng-click="sortBy='vencimento'; reverse=!reverse" role="button">
+                        Campo 2
+                        </a><a data-ng-show="sortBy=='vencimento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                        </h4>							
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)" data-ng-click="setMaster(item)">        
+                      <td class="text-center	text-capitalize">				    
+                          <h4><strong>Valor 1 {{item.val1}}</strong></h4> 
+                      </td>
+                      <td class="text-center	text-capitalize"><h5>Valor 2 {{item.val2}}</h5></td>                    
+                    </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>    
+       
+    <h2 class="sub-header">Incluir documentação</h2>
+    <div class="row">     
+      <div class="col-xs-12">          
+          <div id="actions" class="row">                      
+              <div class="col-xs-4">                      
+                  <button class="btn btn-primary" id="submit-all">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>Enviar arquivos</span>
+                  </button>
+                  <button class="btn btn-warning" id="cancel-all">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancelar Todos</span>
+                  </button>
+              </div>
+              <div class="col-xs-8">                        
+                  <span class="fileupload-process">
+                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                      <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress=""></div>
+                    </div>
+                  </span>
+              </div>
+          </div>
+          <div class="well">   
+               
+              <div class="dropzone" dropzone="dropzoneConfig" id="uploadSection">
+               
+               <div  id="uploadSection">
+                <div  class="dz-default dz-message">
+                  <span>
+                      <p>Arraste aqui novos documentos!</p>
+                      <img src="./img/gaveteirodigital.png" />                          
+                  </span>                    
+                </div>
+                
+              </div>                  
+          </div>        
+      </div>      
+    </div>
+    -->

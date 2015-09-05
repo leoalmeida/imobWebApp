@@ -1,0 +1,301 @@
+	
+  <ol class="breadcrumb">
+      <li><a href="/">Imobcat</a></li>
+      <li>Cadastro</li>
+      <li><a href="/cadastro/imoveis">Imóveis</a></li>
+      <li class="active">Formulário de Imóveis</li>
+  </ol>	<h1 class="sub-header">{{entidade}}</h1>
+	
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
+	
+	<form name="myForm" novalidate class="form-horizontal" role="form">
+	    <div class="row">	    
+	      <div class="col-xs-12 col-md-6">	            
+              <!-- TIPO DE IMOVEL -->
+              <div class="form-group">                    
+                    <label for="tipo" class="control-label">Tipo de Im&oacute;vel</label>
+                    <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipo.$error.required">Obrigat&oacute;rio!</span>
+                    <div class="row">                              
+                        <div class="col-xs-12">                  
+                            <div class="btn-group btn-group-justified">                            
+                              <label data-ng-repeat="tipo in tiposImoveis" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoImovel" btn-radio="'{{tipo.subtipo}}'"><strong><i data-ng-show="novoimovel.tipoImovel===tipo.subtipo" class="fa fa-paw"></i>&nbsp;{{tipo.valor}}</strong></label>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              
+              <!-- SITUAÇÃO DO IMOVEL -->
+              <div class="form-group">
+                    <label for="tipo" class="control-label">Situa&ccedil;&atilde;o</label>
+                    <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipoSituacao.$error.required">Obrigat&oacute;rio!</span>
+                    <div class="row">
+                        <div class="col-xs-12">                  
+                            <div class="btn-group btn-group-justified">                            
+                              <label data-ng-repeat="tipoSituacao in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoSituacao" btn-radio="'{{tipoSituacao.subtipo}}'"><strong><i data-ng-show="novoimovel.tipoSituacao===tipoSituacao.subtipo" class="fa fa-paw"></i>&nbsp;{{tipoSituacao.valor}}</strong></label>
+                            </div>
+                        </div>                    
+                    </div>
+              </div>
+              
+              <!-- TITULO DO IMOVEL -->
+              <div class="form-group">
+                <div class="row">
+                <label for="nome" class="col-xs-2 col-md-2 control-label">T&iacute;tulo</label>	
+                <div class="col-xs-9 col-md-9">			
+                  <input type="text" id="titulo" name="titulo" data-ng-model="novoimovel.titulo" class="form-control" required="required" placeholder="Titulo" />	
+                </div>
+                <div class="col-xs-1 col-md-1">
+                  <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.titulo.$error.required">Obrigat&oacute;rio!</span>
+                </div>
+                </div>
+              </div>      
+              
+              <!-- DESCRICAO DO IMOVEL -->
+              <div class="form-group">
+                <div class="row">
+                  <label for="nome" class="col-xs-2 col-md-2 control-label">Descri&ccedil;&atilde;o</label>	
+                  <div class="col-xs-9 col-md-9">
+                    <textarea id="descricao" name="descricao" format data-ng-model="novoimovel.descricao" class="form-control" required="required" placeholder="Descrição" rows="3"></textarea>
+                  </div>
+                  <div class="col-xs-1 col-md-1">
+                    <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.descricao.$error.required">Obrigat&oacute;rio!</span>
+                  </div>
+                </div>
+              </div>
+        </div>
+	      <div class="col-xs-12 col-md-6">          
+          <div class="panel panel-body panel-default">
+              <legend>
+                    <label for="proprietarios" class="control-label">Propriet&aacute;rios</label>                    
+                    <span class="label label-danger" data-ng-show="submitted && myForm.tel.$error.required">Obrigat&oacute;rio!</span>
+                    <span class="label label-danger" data-ng-show="submitted && myForm.$error.tel">Telefone inv&aacute;lido!</span>                    
+              </legend>
+              <!-- Proprietários -->
+              <div class="form-group">
+                  <div class="col-xs-8 col-md-12 col-lg-8">                        
+                      <div class="input-group" role="group">	
+                        <input type="text" class="form-control" data-ng-model="proprietario.obj.cpf" required="required" readonly />
+                        <div class="input-group-btn" role="group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul id="propList" class="dropdown-menu" role="menu">
+                              <li data-ng-repeat="item in itemsList | filter:filter" data-ng-click="proprietario.obj = item" >{{item.cpf}}</li>
+                            </ul>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-xs-4 col-md-12 col-lg-4">
+                      <button data-ng-click="incluirProprietario()" class="btn btn-primary btn-block" >
+                        <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                      </button>                        
+                  </div>
+              </div>              
+              <label>
+                  Propriet&aacute;rios selecionados
+              </label>                                
+              <div class="well">
+                  <button popover-placement="top" popover="{{prop.nome}}" popover-append-to-body="true" popover-trigger="focus" class="btn btn-info btn-block text-capitalize" ng-repeat="prop in novoimovel.proprietarios">
+                        <div class="close" aria-label="Close" data-ng-click="removeProprietario($index)"><i class="fa fa-times-circle-o fa-lg fa-fw" aria-hidden="true"></i></div>                                            
+                        <span ng-if="$index===0" ng-init="prop.tipo = 'Principal'"> {{prop.tipo}} : {{prop.cpf}}</span>
+                        <span ng-if="$index!==0" ng-init="prop.tipo = 'Adicional'"> {{prop.tipo}} : {{prop.cpf}}</span>
+                        <i class="fa fa-info pull-left"></i>
+                  </button>                        
+              </div>                               
+
+          </div><!-- Painel Proprietários -->
+        </div><!-- Div Proprietários -->
+      </div>
+      
+      <!-- Endereço -->
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- Form Name -->
+          <div class="form-group">
+            <div class="panel panel-body panel-default">                
+                <!-- Header -->
+                <legend>
+                    <label for="enderecos" class="control-label">Endere&ccedil;os</label>                          
+                </legend>
+                <!-- Formulario -->                
+                <div div class="col-xs-12">
+                    
+                    <!-- CEP -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="cep">CEP</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input id="cep" name="cep" type="text" placeholder="CEP" class="form-control" data-ng-model="novoimovel.endereco.cep" ng-blur="getCEP()" required>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Rua -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                          <label class="col-xs-2 control-label" for="textinput">Rua</label>
+                          <div class="col-xs-10">
+                            <input name="rua" type="text" placeholder="Rua" class="form-control" data-ng-model="novoimovel.endereco.rua" required>
+                          </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Número -->
+                    <div class="form-group has-success has-feedback">
+                        <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="textinput">N&uacute;mero</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input name="numero" type="text" placeholder="N&uacute;mero" class="form-control" data-ng-model="novoimovel.endereco.numero" required>
+                        </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Complemento -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="textinput">Complemento</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input id="complemento" name="complemento" type="text" placeholder="Complemento" class="form-control" data-ng-model="novoimovel.endereco.complemento">
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Bairro -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="textinput">Bairro</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input id="bairro" name="bairro" type="text" placeholder="Bairro" class="form-control" data-ng-model="novoimovel.endereco.bairro" required>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Cidade -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="textinput">Cidade</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input id="cidade" name="cidade" type="text" placeholder="Cidade" class="form-control" data-ng-model="novoimovel.endereco.cidade" required>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="textinput">Estado</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input id="uf" name="uf" type="text" placeholder="Estado" class="form-control" data-ng-model="novoimovel.endereco.uf" required>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- País -->
+                    <div class="form-group has-success has-feedback">
+                      <div class="row">
+                        <label class="col-xs-2 col-md-2 control-label" for="pais">Pa&iacute;s</label>
+                        <div class="col-xs-10 col-md-10">
+                          <input name="pais" type="text" placeholder="Pa&iacute;s" class="form-control" data-ng-model="novoimovel.endereco.pais" required>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Validação do Formulário -->
+                    <div class="form-group">
+                      <div class="row">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.form.$error.required">Obrigat&oacute;rio!</span>
+                      </div>
+                    </div>            
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Documentação -->
+      <!--
+      <div class="row">     
+        <div class="col-xs-12">          
+          <div class="panel panel-body panel-default">
+            <legend>
+                  <label for="documents" class="control-label">Documentação</label>                          
+            </legend>
+            <div>
+                <div id="actions" class="row">                      
+                    <div class="col-xs-12">                      
+                        <button class="btn btn-primary" id="submit-all">
+                              <i class="glyphicon glyphicon-upload"></i>
+                              <span>Enviar arquivos</span>
+                        </button>
+                        <button class="btn btn-warning" id="cancel-all">
+                              <i class="glyphicon glyphicon-ban-circle"></i>
+                              <span>Cancelar Todos</span>
+                        </button>
+                    </div>
+                    <br/>   
+                    <div class="col-xs-12">                        
+                        <span class="fileupload-process">
+                          <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress=""></div>
+                          </div>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="dropzone" dropzone="dropzoneConfig" id="uploadSection">
+                
+                  <div  class="dz-default dz-message">
+                    <span> <img src="./img/gaveteirodigital.png" /> Arraste aqui os documentos!</span>                    
+                  </div>
+                  
+                </div>
+                    
+                <!--<div class="table table-striped" class="files" dropzone="dropzoneConfig" id="previews">
+                    <div id="template" class="file-row">
+                      <div class="col-xs-3">
+                          <span class="preview"><img data-dz-thumbnail /></span>
+                      </div>
+                      <div class="col-xs-3">
+                          <p class="name" data-dz-name></p>
+                          <strong class="error text-danger" data-dz-errormessage></strong>
+                      </div>
+                      <div class="col-xs-6">
+                          <p><span class="size" data-dz-size></span><span class="size" data-dz-uploadprogress></span></p>                        
+                          <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                          </div>
+                      </div>
+                      <div>
+                        <button class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Start</span>
+                        </button>                      
+                        <button data-dz-remove class="btn btn-warning cancel">
+                          <i class="glyphicon glyphicon-ban-circle"></i>
+                          <span>Cancel</span>
+                        </button>
+                        <button data-dz-remove class="btn btn-danger delete">
+                          <i class="glyphicon glyphicon-trash"></i>
+                          <span>Delete</span>
+                        </button>
+                      </div>
+                    </div>                         
+                </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+      -->
+      
+      <div class="form-group">
+            <div class="row">
+            <div class="col-xs-offset-2 col-md-offset-2 col-xs-8 col-md-8">			
+              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-1 col-md-offset-1 col-xs-4 col-md-4" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>              
+              <a class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-4 col-md-4" href="/cadastro/imoveis"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
+            </div>
+            </div>
+      </div>
+	
+	</form>

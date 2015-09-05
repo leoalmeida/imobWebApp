@@ -1,0 +1,35 @@
+{
+  "name": "Imobapp",
+  "description": "Gestão de imobiliária",
+  "version": "0.0.2",
+  "manifest_version": 2,
+  "minimum_chrome_version": "29",
+  "oauth2": {
+    "client_id": "953449888791-u28ifn1c5ufm1k2omfc783tp69a55a1g.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive"
+    ]
+  },
+  "icons": {
+    "128": "img/gato.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhKIjyaXHOhbrGDIWuUft5/kHVSgnjTgY3sVpqnphfop628GMyeu+r/hnPqoeTm0h/D1aQvZNDJ5jizkQIXq6LgVdskH2Pghlohe3RRlTU2xmX2D48WMFcfkY3yGLvp7H5bFRSdxTg4hVqh+CWiS5+0OdcJbELi/YvIt6IFTSvlFeouxdxa5CnwfHfwo9RhtR729W2FG2jIQTuICNidQXO7bP+c62kJexqWlLRAQpRSdajGconvhnz9lXDbQM7A4cIJkTQ5/OItRY13Bb71QTXri1J5AJq1nK5Rubs/1gfiGe9uSaii870SJFc11vqxx/YlbekdsWmPoy3q8lpBLXeQIDAQAB",
+  "browser_action": {
+    "default_title": "Imobcat",
+    "default_icon": "img/gato.png"
+  },  
+  "background": {
+       "scripts": ["background.js"],
+       "persistent": false
+  },
+  "content_security_policy": "script-src 'self' https://viacep.com.br/ws/ filesystem 'unsafe-eval'; object-src 'self'",  
+  "permissions": [
+    "identity",
+    "https://ssl.gstatic.com/",
+    "https://www.googleapis.com/",
+    "https://accounts.google.com/",
+    "history",
+    "tabs",
+    "<all_urls>"
+  ]
+}

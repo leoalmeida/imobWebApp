@@ -1,0 +1,63 @@
+            <ol class="breadcrumb">
+                  <li><a href="/">Imobcat</a></li>
+                  <li class="active">Calendario</li>
+            </ol>
+            <div class="page-header">
+                	<h1>Calendario</h1>	
+                  <div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+                  <div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
+            </div>
+            <div class="well">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <div class="panel-heading">            
+                            <label>Novos Eventos <span class="badge">{{newEvents.length}}</span></label>
+                            
+                            <div class="input-group input-group-sm">                
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input type="search" class="form-control" data-ng-model="q" placeholder="filtrar eventos..." />
+                                <span class="input-group-addon btn btn-default" type="button" ng-click="addEvent()">
+                                    &nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;
+                                </span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="panel-body example-animate-container"  id='external-events'>
+                        
+                        
+                            <div class="alert alert-danger" role="alert" ng-drop="true" ng-drop-success="eventDropCompleteList($data,$event)">
+                              Descarte aqui os eventos.
+                            </div>
+                              <!-- Lista de objetos utilizando apenas o identificador -->
+                              <div ng-drag="true" ng-drag-data="obj" ng-drag-success="eventDragSuccessList($data,$event)" class="btn label-info btn-block text-capitalize animate-repeat" ng-repeat="obj in newEvents | filter:q" tooltip-placement="top" tooltip="Período: {{e.start | date:'dd MMM yyyy'}} - {{e.end | date:'dd MMM yyyy'}}" tooltip-append-to-body="true" tooltip-trigger="focus">                                
+                                  <div class="pull-left" aria-label="Close" data-toggle="modal" data-target="#createEventModal" aria-expanded="false"><i class="fa fa-pencil-square-o fa-inverse fa-lg fa-fw" aria-hidden="true"></i></div>
+                                  {{obj.title}}
+                                  <div class="close" aria-label="Close" data-ng-click="removeEvent($index)"><i class="fa fa-times-circle-o fa-lg fa-fw" aria-hidden="true"></i></div>
+                              </div>
+                       
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                        <tabset>
+                            <tab select="renderCalendar('myCalendar1');">
+                              <tab-heading>
+                               <i class="glyphicon glyphicon-bell"></i> Calend&aacute;rio Imobili&aacute;ria
+                              </tab-heading>
+                              <div class="alert alert-success" role="alert" ng-show="alertMessage != undefined && alertMessage != ''">
+                                <h4>{{alertMessage}}</h4>
+                              </div>
+                              <div class="btn-toolbar">                                
+                                <div class="btn-group">
+                                    <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar1')">Agenda Di&aacute;ria</button>
+                                    <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">Agenda Semanal</button>
+                                    <button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">Mensal</button>
+                                </div>
+                              </div>                              
+                              <div class="calendar" ng-drop="true" ng-drop-success="eventDropCompleteCal($data,$event)" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
+                           </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>   

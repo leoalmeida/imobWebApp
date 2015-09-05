@@ -1,0 +1,215 @@
+<div class="col-sm-12 col-md-12 col-lg-12" >
+  <ol class="breadcrumb">
+        <li><a href="/">Imobcat</a></li>
+        <li>Cadastro</li>
+        <li class="active">Eventos</li>
+  </ol>
+	<h1 class="sub-header">{{entidade}}</h1>
+	<div class="btn-group">
+		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+		<ul class="dropdown-menu " role="menu">
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'json',escape:'false'});"> <img src="/img/icons/json.png" width="24px"> JSON</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"> <img src="/img/icons/json.png" width="24px"> JSON (ignoreColumn)</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'json',escape:'true'});"> <img src="/img/icons/json.png" width="24px"> JSON (with Escape)</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'xml',escape:'false'});"> <img src="/img/icons/xml.png" width="24px"> XML</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'sql'});"> <img src="/img/icons/sql.png" width="24px"> SQL</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'csv',escape:'false'});"> <img src="/img/icons/csv.png" width="24px"> CSV</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'txt',escape:'false'});"> <img src="/img/icons/txt.png" width="24px"> TXT</a></li>
+			<li class="divider"></li>				
+			
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'excel',escape:'false'});"> <img src="/img/icons/xls.png" width="24px"> XLS</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'doc',escape:'false'});"> <img src="/img/icons/word.png" width="24px"> Word</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'powerpoint',escape:'false'});"> <img src="/img/icons/ppt.png" width="24px"> PowerPoint</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'png',escape:'false'});"> <img src="/img/icons/png.png" width="24px"> PNG</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> <img src="/img/icons/pdf.png" width="24px"> PDF</a></li>
+			
+			
+		</ul>
+	</div>
+	<table class="table table-bordered table-striped" id="listaValores" ng-init="evento=true">
+		<thead>
+			<tr>				
+				<th class="col-xs-2 text-center">				  
+					<a data-ng-click="sortBy='prop'; reverse=!reverse" role="button">
+            Propriet&aacute;rio
+          </a><a data-ng-show="sortBy=='prop'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>
+				<th class="col-xs-2 text-center">				  
+					<a data-ng-click="sortBy='inq'; reverse=!reverse" role="button">
+            Inquilino
+          </a><a data-ng-show="sortBy=='inq'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>					
+				</th>				
+				<th class="col-xs-1 text-center">
+					<a data-ng-click="sortBy='tipo'; reverse=!reverse" role="button">
+            Tipo Evento          
+          </a><a data-ng-show="sortBy=='tipo'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>
+				<th class="col-xs-3 text-center">
+				  <a data-ng-click="sortBy='descricao'; reverse=!reverse" role="button">
+					Ação
+					</a><a data-ng-show="sortBy=='descricao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>
+				<th class="col-xs-1 text-center">
+				  <a data-ng-click="sortBy='situacao'; reverse=!reverse" role="button">
+					Situa&ccedil;&atilde;o
+					</a><a data-ng-show="sortBy=='situacao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>				
+				<th class="col-xs-2 text-center">
+				  <a data-ng-click="sortBy='dataVencimento'; reverse=!reverse" role="button">
+					Dt. Vencimento
+					</a><a data-ng-show="sortBy=='dataVencimento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>	
+				<th class="col-xs-1 text-center">
+					<div class="inline">					
+						<a href="/cadastro/eventos/new" class="btn btn-success btn-sm"><i class="fa fa-plus fa-fw fa-inverse"></i>&nbsp;Incluir</a>
+					</div>	
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		  <!--<script type="text/ng-template" id="contentDetailModal.html">              
+		  </script>-->
+			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy"  data-ng-class="{active : isSelected(item), danger: (item.situacao === 'vencido'), warning: (item.situacao === 'avencer')}" data-ng-click="setMaster(item)">				
+				<td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">
+				    <strong>{{item.proprietario.nome}}</strong> 
+				</td>
+				<td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.inquilino.nome}}</td>
+				<td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.tipo}}</td>
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.descricao}}</td>				
+				<td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.situacao}}</td>
+				<td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.dataVencimento}}</td>
+				<td class="text-center">
+					<a class="btn btn-primary btn-sm" href="cadastro/eventos/edit/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp;Alterar</a> 
+					<a class="btn btn-danger btn-sm ng-hide" data-ng-click="removeEventos(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp;Remover</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+            <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title-success text-capitalize" id="myModalLabel"><span class="label label-info">{{selected.id}}</span>&nbsp;&nbsp;{{selected.tipo}} - {{selected.titulo}}</h4>          
+          <a href="#" data-ng-click="criaPDF()" > <img src="/img/icons/pdf.png" width="24px"> PDF</a>
+      </div>
+      <div class="modal-body">
+      	<div class="container-fluid export">
+      	  <div class="row">                
+                <div class="alert alert-success text-capitalize text-center"><strong>{{selected.situacao}}</strong></div>                
+          </div>
+          <div class="row"> 
+            <div class="col-xs-offset-1 col-xs-4">
+              <label>Inquilino:</label>
+              <div class="well well-sm text-center">
+                  <label>{{selected.inquilino.nome}}</label>
+              </div>
+            </div>
+            <div class="col-xs-offset-2 col-xs-4">              
+              <label>Propriet&aacute;rio:</label>
+              <div class="well well-sm text-center">
+                  <label>{{selected.proprietario.nome}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row"> 
+            <div class="col-xs-offset-1 col-xs-10">
+              <label>Descri&ccedil;&atilde;o detalhada: </label>
+              <div class="well">
+              
+                    <label>{{selected.descricao}}</label>
+              </div>
+            </div>
+          </div>          
+          <div class="row">
+              <div class="col-xs-4">
+                  <label for="cobranca" class="control-label" >Valor cobrado:  <a tootip-placement="right" tootip="Total cobrado do inquilino: Aluguel + Taxas" tootip-append-to-body="false" tootip-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
+                  <div id="cobranca" class="well well-sm text-center">
+                    <label >{{selected.cobranca}}</label>
+                  </div>
+                  
+                  <label for="totaltaxas" class="control-label">Total em taxas: <a popover-placement="right" popover="Soma do valor das taxas descritas ao lado" popover-append-to-body="false" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
+                  <div id="totaltaxas" class="well well-sm text-center">
+                      <label>{{selected.totaltaxas}}</label>
+                  </div>
+                  
+                  <label for="aluguel" class="control-label">Aluguel: <a popover-placement="right" popover="Valor do aluguel cobrado" popover-append-to-body="false" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
+                  <div id="aluguel" class="well well-sm text-center"> 
+                    <label>{{selected.aluguel}}</label>
+                  </div>
+              
+                  <label for="comissao" class="control-label">Comissão: <a popover-placement="right" popover="Comissão de 8% do valor movimentado" popover-append-to-body="false" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
+                  <div id="comissao" class="well well-sm text-center"> 
+                    <label>{{selected.comissao}}</label>
+                  </div>
+                            
+                  <label for="deposito" class="control-label">Valor à depositar: <a popover-placement="top" popover="Valor restante à depositar para o proprietário" popover-append-to-body="true" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
+                  <div id="deposito" class="well well-sm text-center">
+                    <label>{{selected.deposito}}</label>
+                  </div>                  
+                  
+              </div>
+              <div class="col-xs-8">
+                  <div class="row">
+                      <div class="col-xs-6">
+                          <label>Data de Cria&ccedil;&atilde;o:</label>
+                          <p class="bg-default text-center">
+                              <label class="label label-info">{{selected.dataInicio}}</label>
+                          </p>
+                      </div> 
+                      <div class="col-xs-6">                          
+                          <label><strong>Data de Vencimento:</strong></label>                  
+                          <p class="bg-default text-center">
+                              <label class="label label-danger" data-ng-if="selected.situacao === 'vencido'"><strong>{{selected.dataVencimento}}</strong></label>
+                              <label class="label label-warning" data-ng-if="selected.situacao === 'avencer'"><strong>{{selected.dataVencimento}}</strong></label>
+                              <label class="label label-success" data-ng-if="selected.situacao === 'ativo'"><strong>{{selected.dataVencimento}}</strong></label>                      
+                          </p>
+                      </div>
+                  </div>  
+                  <label for="listataxas" class="control-label">Detalhamento das Taxas:</label>
+                  <table id="listataxas" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>				
+                          <th class="col-xs-4 text-center">
+                            Tipo de taxa
+                          </th>
+                          <th class="col-xs-4 text-center">
+                            Valor Pago
+                          </th>
+                          <th class="col-xs-4 text-center">
+                            Data do pagamento
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>			
+                        <tr data-ng-repeat="item in selected.listaTaxas">				
+                          <td class="text-center text-capitalize">
+                            <label>{{item.tipo}}</label>
+                          </td>
+                          <td class="text-center text-capitalize">
+                            <label>{{item.valor | filter: formatoMonetario}}</label>
+                          </td>
+                          <td class="text-center text-capitalize">
+                            <label>{{item.pagamento | filter: dateFormat}}</label>
+                          </td>
+                      </tbody>
+                  </table>
+              </div>
+          </div> 
+        </div>
+      </div>      
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/tableExport.js"></script>
+<script type="text/javascript" src="/js/jquery.base64.js"></script>
+<script type="text/javascript" src="/js/html2canvas.js"></script>
+<script type="text/javascript" src="/js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="/js/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="/js/jspdf/libs/base64.js"></script>

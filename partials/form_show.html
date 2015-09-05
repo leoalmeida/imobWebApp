@@ -1,0 +1,51 @@
+<div data-ng-controller="DocumentosCtrl">
+    <ul class="inline">
+        <li>
+            <div class="alert alert-info">
+                 <h4>Total de documentos: {{filtered.length}}</h4>
+            </div>
+        </li>
+        <li>
+            <div class="btn-group" data-ng-class="{open: open}">
+                <button class="btn">Tipo de Arquivo </button>
+                <button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    <li><a data-ng-click="checkAll()"><i class="icon-ok-sign"></i>  Selecionar Todos</a></li>
+                    <li><a data-ng-click="selectedDocTypes=[];"><i class="icon-remove-sign"></i>  Remover Todos</a></li>
+                    <li class="divider"></li>
+                    <li data-ng-repeat="docType in docTypeList"> <a data-ng-click="setSelectedDocTypes()">{{docType.name}}<span data-ng-class="isChecked(docType.id)"></span></a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <hr/>
+     <h3>Documentos:</h3>
+
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th style="width:10%">#</th>
+                <th style="width:20%">Nome</th>
+                <th style="width:40%">Tipo</th>
+                <th style="width:30%">Descrição</th>
+		<th style="width:30%">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="documento in filtered = (documentos | docFilter:selectedDocTypes)">
+                <td>{{$index + 1}}</td>
+                <td><em>{{documento.nome}}</em>
+                </td>
+                <td>{{documento.tipo.name}}</td>
+                <td>{{documento.descricao}}</td>
+		<td>{{documento.link}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <!--
+    <pre>{{selectedCompany|json}}</pre>
+    <pre>{{companyList|json}}</pre>
+    <pre>{{clients|json}}</pre>
+    -->
+</div>
