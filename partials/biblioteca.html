@@ -1,26 +1,37 @@
-<div class="biblioteca">
+<h1 class="page-header">Biblioteca Virtual</h1> 
 
-    <h1 class="page-header">Biblioteca Virtual</h1> 
-    
-    <div id="dropper">
-        <div class="dropzone"><img src="img/upload.svg"></div>
+<div id="dropper">
+    <div class="dropzone"><img src="img/upload.svg"></div>
+</div>    
+
+<section class="container-fluid">
+    <div class="row">                         
+        <div class="col-sm-offset-1 col-sm-10">
+                <div class="input-group input-group-lg" role="search">
+                  <input type="search" id="filterField" class="form-control" placeholder="Buscar..."  ng-model="filter">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <i class="fa fa-search fa-fw"></i>
+                    </button>
+                  </span>
+                </div>
+        </div>
     </div>    
-    
-    <section class="container-fluid">
-        <div class="row">                         
-              <div class="col-sm-offset-1 col-sm-10">
-                    <div class="input-group input-group-lg" role="search">
-                      <input type="search" id="filterField" class="form-control" placeholder="Buscar..."  ng-model="filter">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search fa-fw"></i>
-                        </button>
-                      </span>
-                    </div>
-              </div>                        
-        </div>        
+    <div class="biblioteca">
         <div class="row">
-            <nav   class="col-md-2">
+          <nav class="col-sm-offset-1 col-sm-10">
+              <h2>Google Drive Uploader</h2>
+              <button id="authorize-button" class="btn" data-ng-click="toggleAuth(true)">{{authButtonLabel()}}</button>
+              <button class="btn" data-ng-click="fetchDocs(flase)">Refresh</button>
+          </nav>          
+        </div>
+        
+        <div class="row">
+            <progress></progress>
+        </div>
+        
+        <div class="row">
+            <nav id="sidebar" class="col-md-2">
                 <button class="btn" id="close-button" title="Close">&lt;</button>
                 <div class="well">
                     <h3 class="sub-header">Categorias</h3>
@@ -91,13 +102,9 @@
                     </div>                
                 </div> 
             </nav>
+            
+            
             <div id="main" class="col-sm-12 col-md-10">
-              <nav>
-                <h2>Google Drive Uploader</h2>
-                <button id="authorize-button" class="btn" data-ng-click="toggleAuth(true)">{{authButtonLabel()}}</button>
-                <button class="btn" data-ng-click="fetchDocs(flase)">Refresh</button>
-              </nav>
-              <progress></progress>
               <ul>
                 <li data-ng-repeat="doc in docs">
                   <!-- crbug.com/120693. Anchors need target="_blank", but <base> is taking care of this for us :) -->
@@ -107,8 +114,9 @@
               </ul>
             </div>
         </div>
-    </section>    
-</div>
+    </div>
+</section>    
+
 
 
 

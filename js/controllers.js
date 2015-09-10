@@ -169,8 +169,8 @@ imobDbControllers.controller('AdminUserCtrl', ['$scope', '$log', '$rootScope', '
 }]);
 imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB', 'gdocs',
 		function($scope, $http,  $indexedDB,  gdocs) {	
-	
-	 $scope.docs = [];
+
+  $scope.docs = [];
 
   // Response handler that caches file icons in the filesystem API.
   function successCallbackWithFsCaching(resp, status, headers, config) {
@@ -183,9 +183,7 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
         title: entry.title,
         updatedDate: Util.formatDate(entry.modifiedDate),
         updatedDateFull: entry.modifiedDate,
-        icon: gdocs.getLink(entry.link,
-                            'http://schemas.google.com/docs/2007#icon').href,
-        alternateLink: gdocs.getLink(entry.link, 'alternate').href,
+        icon: entry.iconLink,
         alternateLink: entry.alternateLink,
         size: entry.fileSize ? '( ' + entry.fileSize + ' bytes)' : null
       };
@@ -277,7 +275,7 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
       return 'Authorize';
   };
 
-  $rootscope.toggleAuth(false);		  
+  $scope.toggleAuth(false);		  
 		  
 }]);
 	

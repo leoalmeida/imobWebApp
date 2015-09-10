@@ -49,7 +49,7 @@
   font-family: 'Droid Sans', sans-serif;
 }
 
-.biblioteca.dropping > #main {
+body.dropping > .biblioteca {
   -webkit-filter: blur(2px);
 }
 
@@ -63,13 +63,13 @@
   pointer-events: all;
 }
 
-#main > ul {
+.biblioteca ul {
   margin: 0;
   height: 525px;
   overflow: auto;
 }
 
-#main > li {
+.biblioteca li {
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 5px;
@@ -110,17 +110,17 @@
   opacity: 0.3;
 }
 
-#container > nav {
+.biblioteca > nav {
   padding-top: 15px;
   margin-bottom: 10px;
   -webkit-app-region: drag;
 }
 
-#container > nav button {
+.biblioteca > nav button {
   -webkit-app-region: no-drag;
 } 
 
-nav > h2 {
+.biblioteca > nav > h2 {
   display: inline-block;
   vertical-align: middle;
   margin-right: 15px;
@@ -130,7 +130,7 @@ nav > h2 {
   opacity: 1;
 }
 
-#close-button {
+#sidebar#close-button {
   float: right;
   padding: 0 5px 2px 5px;
   font-weight: bold;

@@ -38,7 +38,8 @@ imobDbApp.config( [
     '$compileProvider',
     function( $compileProvider )
     {   
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto):/);
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|filesystem):/);
     }
 ]);
               
@@ -48,8 +49,7 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
 	    $routeProvider.
 		  when('/home', {
 				templateUrl: 'partials/home.html',
-				controller: 'HomeCtrl',
-				access: { requiredAuthentication: true }
+				controller: 'HomeCtrl'			
 			}).
       when('/upload', {
         templateUrl: '/partials/login.html',
@@ -72,8 +72,7 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
 			when('/biblioteca', {  
 				templateUrl: 'partials/biblioteca.html',
 				controller: 'BibliotecaCtrl',
-				css: '/css/gdocs.css',
-				access: { requiredAuthentication: true }
+				css: '/css/gdocs.css'
 			}).
 			when('/boleto', { 
 				templateUrl: '/partials/formNewBoleto.html'
@@ -148,12 +147,12 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
 				css: '/css/404.css'
 			}).
 			otherwise({			    
-        templateUrl: '/partials/login.html',
-        controller: 'AdminUserCtrl',
-        css: '/css/login.css',
-        access: { requiredAuthentication: true }
-				//templateUrl: 'partials/home.html',
-				//controller: 'HomeCtrl'
+        //templateUrl: '/partials/login.html',
+        //controller: 'AdminUserCtrl',
+        //css: '/css/login.css',
+        //access: { requiredAuthentication: true }        
+				templateUrl: 'partials/home.html',
+				controller: 'HomeCtrl'
 			});
 			
 		$locationProvider.html5Mode(true);
@@ -165,6 +164,7 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
 	}
 ]);
 
+    
 // Init setup and attach event listeners.
 document.addEventListener('DOMContentLoaded', function(e) {
   // FILESYSTEM SUPPORT --------------------------------------------------------
@@ -215,7 +215,7 @@ imobDbApp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');    
 });
 */
-
+/*
 imobDbApp.run(function($rootScope, $location, $window, gdocs) { 
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
         if (nextRoute != null 
@@ -232,4 +232,4 @@ imobDbApp.run(function($rootScope, $location, $window, gdocs) {
         }
     });    
 });
-
+*/

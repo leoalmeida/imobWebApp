@@ -19,15 +19,15 @@
     "default_icon": "img/gato.png"
   },  
   "background": {
-       "scripts": ["background.js"],
-       "persistent": false
+       "scripts": ["background.js"]
   },
-  "content_security_policy": "script-src 'self' https://viacep.com.br/ws/ filesystem 'unsafe-eval'; object-src 'self'",  
+  "content_security_policy": "script-src 'self' https://viacep.com.br/ws/ 'unsafe-eval'; object-src  filesystem: 'self'  ;",  
   "permissions": [
     "identity",
     "https://ssl.gstatic.com/",
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
+    "unlimitedStorage",
     "history",
     "tabs",
     "<all_urls>"

@@ -1,0 +1,160 @@
+  <ol class="breadcrumb">
+      <li><a href="/">Imobcat</a></li>
+      <li class="active">Online Chat</li>      
+  </ol>
+
+	<h1 class="sub-header">{{entidade}}</h1>
+	
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
+	
+	<form name="myForm" novalidate class="form-horizontal" role="form">
+	    <div class="row">
+	      <!-- Informações Básicas -->
+        <div class="col-xs-12 col-md-6">          
+          <div class="panel panel-body panel-default">
+            <legend>
+                  <label for="telefones" class="control-label">Informações Básicas</label>                          
+            </legend>
+            <div class="form-group">
+              <!-- TIPO DE CLIENTE -->
+                <div class="col-xs-11">
+                    <div class="btn-group btn-group-justified">                    
+                        <label data-ng-repeat="tpcliente in tiposClientes" data-ng-init="novocliente.tipoCliente[$index]=false" class="btn btn-primary text-capitalize" data-ng-model="novocliente.tipoCliente[$index]" btn-checkbox="tpcliente.subtipo"><strong><i class="fa fa-paw" data-ng-show="novocliente.tipoCliente[$index]"></i>&nbsp;{{tpcliente.valor}}</strong></label>                    
+                    </div>
+                </div>          
+                <div class="col-xs-1">
+                    <span class="label label-danger" data-ng-show="submitted && myForm.tiposClientes.$error.required">Obrigat&oacute;rio!</span>
+                </div>
+            </div>  
+              <!-- CPF -->
+            <div class="form-group">
+                <label for="cpf" class="col-xs-2 control-label">CPF</label>                  
+                <div class="col-xs-9">		
+                  <input type="text" id="cpf" name="cpf" data-ng-model="novocliente.cpf" class="form-control" required="required" placeholder="CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
+                </div>
+                <div class="col-xs-1">
+                  <span class="label label-danger" data-ng-show="submitted && myForm.cpf.$error.required">Obrigat&oacute;rio!</span>
+                  <span class="label label-danger" data-ng-show="submitted && myForm.$error.cpf">CPF Inv&aacute;lido!</span>
+                </div>                
+            </div>  
+              <!-- Nome -->
+            <div class="form-group">
+                  <label for="nome" class="col-xs-2 control-label">Nome</label>	
+                  <div class="col-xs-9">			
+                    <input type="text" id="nome" name="nome" data-ng-model="novocliente.nome" class="form-control" required="required" placeholder="Nome" />	
+                  </div>
+                  <div class="col-xs-1">
+                    <span class="label label-danger" data-ng-show="submitted && myForm.name.$error.required">Obrigat&oacute;rio!</span>
+                  </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- Form Name -->
+                <div class="form-group">
+                  <div class="panel panel-body panel-default">                
+                      <!-- Header -->
+                      <legend>
+                          <label for="enderecos" class="control-label">Online Chat</label>                          
+                      </legend>
+                      <!-- Formulario -->
+                      <div class="col-xs-12 col-md-6">
+                          <label>
+                              Conversa - {{user.nome}}
+                          </label>
+                          <div class="well">
+                              <!-- Lista de objetos utilizando apenas o identificador -->
+                              <button  class="btn btn-info btn-block text-capitalize" data-ng-repeat="end in novocliente.enderecos" popover-placement="top" popover="Imóvel: {{end.endereco | formatoEndereco}}" popover-append-to-body="true" popover-trigger="focus">                                
+                                  {{end.tipo}} : {{end.bairro}}
+                                  <div class="close" aria-label="Close" data-ng-click="removeEndereco($index)"><i class="fa fa-times-circle-o fa-lg fa-fw" aria-hidden="true"></i></div>                              
+                                  <i class="fa fa-info pull-left"></i>
+                              </button>                          
+                          </div>
+                          <div class="well" data-ng-show="submitted && myForm.endereco.$error">
+                            <span class="label label-danger" data-ng-show="submitted && myForm.endereco.tipo.$error.required">Obrigat&oacute;rio!</span>
+                            <span class="label label-danger" data-ng-show="submitted && myForm.endereco.tipoImovel.$error.required">Obrigat&oacute;rio!</span>
+                          </div>                      
+                               
+                          <!-- País -->
+                          <div class="form-group has-success has-feedback">
+                            <div class="row">
+                              <label class="col-xs-2 col-md-2 control-label" for="pais">Pa&iacute;s</label>
+                              <div class="col-xs-10 col-md-10">
+                                <input name="pais" type="text" placeholder="Pa&iacute;s" class="form-control" data-ng-model="endereco.pais" required>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="form-group">                            
+                              <div class="row">
+                                <!-- Botão de inclusão -->
+                                <div class="col-xs-4">                                
+                                  <button data-ng-click="incluirEndereco()" class="btn btn-primary btn-block" >
+                                    <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                  </button>
+                                </div>
+                              </div>
+                          </div>
+                      </div>                                             
+                  </div>                
+                </div>
+              </div>
+            </div>      
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+            <div class="row">
+            <div class="col-xs-offset-2 col-md-offset-2 col-xs-8 col-md-8">			
+              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-1 col-md-offset-1 col-xs-4 col-md-4 start" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
+              <a class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-4 col-md-4" href="/cadastro/clientes"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
+            </div>
+            </div>
+      </div>	
+	</form>
+	
+	
+	
+<div class="modal" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title-success text-capitalize" id="myModalLabel"><span class="label label-success">File: </span> {{selectedDoc.name}}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="container-fluid">
+              <div class="form-group">
+                  <div class="col-xs-12">
+                      <div class="input-group">
+                          <input type="text" id="tag" data-ng-keypress="enterKey($event); " data-ng-model="tag" class="form-control" required="required" />
+                          <a class="input-group-addon" data-ng-click="incluirTag()"><i class="fa fa-upload fa-fw"></i></a>                          
+                      </div>
+                  </div>                                           
+              </div>
+              
+              <label>
+                  Tags de Sistema
+              </label>                                
+              <div class="well">
+                  <span class="badge text-capitalize" ng-repeat="tag in selectedDoc.tags.fixed">                                            
+                        {{tag}}
+                  </span>                          
+              </div>
+              
+              <label>
+                  Tags Cadastradas
+              </label>                                
+              <div class="well">
+                  <span class="badge text-capitalize" ng-repeat="tag in selectedDoc.tags.user">
+                        <div class="close" aria-label="Close" data-ng-click="removeTag($index)"><i class="fa fa-times-circle-o fa-fw" aria-hidden="true"></i></div>                                            
+                        {{tag}}
+                  </span>                          
+              </div>    
+          </div>
+      </div>     
+    </div>
+  </div>
+</div>  
+            
