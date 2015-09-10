@@ -17,86 +17,61 @@
                 </div>
         </div>
     </div>    
-    <div class="biblioteca">
-        <div class="row">
-          <nav class="col-sm-offset-1 col-sm-10">
-              <h2>Google Drive Uploader</h2>
-              <button id="authorize-button" class="btn" data-ng-click="toggleAuth(true)">{{authButtonLabel()}}</button>
-              <button class="btn" data-ng-click="fetchDocs(flase)">Refresh</button>
-          </nav>          
-        </div>
+    <div class="biblioteca" data-ng-init="toggleAuth(true)">
         
-        <div class="row">
-            <progress></progress>
-        </div>
+        
+				<nav class="col-sm-offset-1 col-sm-10">
+				  <h2>Google Drive - /{{actualFolder.title}}</h2>
+				  
+				  <button class="btn" data-ng-click="fetchDocs(false,actualFolder)">Refresh</button>
+				</nav>    
+			
+			
+				<div class="row">					
+    				<progress class="col-sm-offset-2 col-sm-8"></progress>
+    		</div>
         
         <div class="row">
             <nav id="sidebar" class="col-md-2">
-                <button class="btn" id="close-button" title="Close">&lt;</button>
                 <div class="well">
+                		<button class="btn" id="close-button" title="Close">&lt;</button>
                     <h3 class="sub-header">Categorias</h3>
                     <div class="row">                      
-                          <div class="col-xs-12">
-                              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Clientes">
-                                      <input type="checkbox" autocomplete="off" > <i class="fa fa-group fa-fw"></i>
-                                    </label>
-                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Imóveis">
-                                      <input type="checkbox" autocomplete="off" ><i class="fa fa-building fa-fw"></i>
-                                    </label>
-                              </div>
+                        <div class="col-xs-12">
+	                        <div class="btn-group btn-group-justified" data-toggle="buttons">
+	                          <label class="btn" btn-checkbox="selectedTypes.XLS" data-toggle="tooltip" data-placement="down" title="Clientes"><a data-ng-click="setType()"><i class="fa fa-group fa-fw"></i></a></label>
+	                      		<label class="btn" btn-checkbox="selectedTypes.DOC" data-toggle="tooltip" data-placement="down" title="Imóveis"><a data-ng-click="setType()"><i class="fa fa-building fa-fw"></i></a></label>
+	                        </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="btn-group btn-group-justified" data-toggle="buttons">
+                          	<label class="btn" btn-checkbox="selectedTypes.XLS" data-toggle="tooltip" data-placement="down" title="Contratos"><a data-ng-click="setType()"><i class="fa fa-legal fa-fw"></i></a></label>
+                        		<label class="btn" btn-checkbox="selectedTypes.DOC" data-toggle="tooltip" data-placement="down" title="Eventos"><a data-ng-click="setType()"><i class="fa fa-flag fa-fw"></i></a></label>
                           </div>
-                          <div class="col-xs-12">
-                              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Contratos">
-                                      <input type="checkbox" autocomplete="off" > <i class="fa fa-legal fa-fw"></i>
-                                    </label>
-                                    <label class="btn" data-toggle="tooltip" data-placement="down" title="Eventos">
-                                      <input type="checkbox" autocomplete="off" ><i class="fa fa-flag fa-fw"></i>
-                                    </label>
-                              </div>
-                          </div>
+                        </div>
                     </div>
                     
                     <h3 class="sub-header">Tipos de Mídia</h3>
                     <div class="row">                                          
                         <div class="col-xs-12">
                           <div class="btn-group btn-group-justified" data-toggle="buttons">
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="Excel">
-                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/xls.png" width="24px">
-                            </label>
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="Word">
-                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/word.png" width="24px">
-                            </label>
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="PowerPoint">
-                              <input type="checkbox" autocomplete="off"><img src="/img/icons/ppt.png" width="24px">
-                            </label>
+                          	<label class="btn" btn-checkbox="selectedTypes.XLS" data-toggle="tooltip" data-placement="down" title="Excel"><a data-ng-click="setType()"><img src="/img/icons/xls.png" width="24px"></a></label>
+                            <label class="btn" btn-checkbox="selectedTypes.DOC" data-toggle="tooltip" data-placement="down" title="Word"><a data-ng-click="setType()"><img src="/img/icons/word.png" width="24px"></a></label>
+                            <label class="btn" btn-checkbox="selectedTypes.PPT" data-toggle="tooltip" data-placement="down" title="PowerPoint"><a data-ng-click="setType()"><img src="/img/icons/ppt.png" width="24px"></a></label>
+                          </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="btn-group btn-group-justified" data-toggle="buttons">                            
+                            <label class="btn" btn-checkbox="selectedTypes.TXT" data-toggle="tooltip" data-placement="down" title="TXT"><a data-ng-click="setType()"><img src="/img/icons/txt.png" width="24px"></a></label>
+                            <label class="btn" btn-checkbox="selectedTypes.CSV" data-toggle="tooltip" data-placement="down" title="CSV"><a data-ng-click="setType()"><img src="/img/icons/csv.png" width="24px"></a></label>
+                            <label class="btn" btn-checkbox="selectedTypes.PDF" data-toggle="tooltip" data-placement="down" title="PDF"><a data-ng-click="setType()"><img src="/img/icons/pdf.png" width="24px"></a></label>
                           </div>
                         </div>
                         <div class="col-xs-12">
                           <div class="btn-group btn-group-justified" data-toggle="buttons">
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="TXT">
-                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/txt.png" width="24px">
-                            </label>
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="CSV">
-                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/csv.png" width="24px">
-                            </label>
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="PDF">
-                              <input type="checkbox" autocomplete="off"><img src="/img/icons/pdf.png" width="24px">
-                            </label>                          
-                          </div>
-                        </div>
-                        <div class="col-xs-12">
-                          <div class="btn-group btn-group-justified" data-toggle="buttons">
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="Imagem">
-                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/png.png" width="24px">
-                            </label>
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="JSON">
-                              <input type="checkbox" autocomplete="off" > <img src="/img/icons/json.png" width="24px">
-                            </label>
-                            <label class="btn" data-toggle="tooltip" data-placement="down" title="XML">
-                              <input type="checkbox" autocomplete="off"><img src="/img/icons/xml.png" width="24px">
-                            </label>                          
+                          	<label class="btn" btn-checkbox="selectedTypes.IMG" data-toggle="tooltip" data-placement="down" title="Imagem"><a data-ng-click="setType()"><img src="/img/icons/png.png" width="24px"></a></label>
+	                          <label class="btn" btn-checkbox="selectedTypes.JSON" data-toggle="tooltip" data-placement="down" title="json"><a data-ng-click="setType()"><img src="/img/icons/json.png" width="24px"></a></label>
+	                          <label class="btn" btn-checkbox="selectedTypes.XML" data-toggle="tooltip" data-placement="down" title="xml"><a data-ng-click="setType()"><img src="/img/icons/xml.png" width="24px"></a></label>
                           </div>
                         </div>
                     </div>                
@@ -106,9 +81,12 @@
             
             <div id="main" class="col-sm-12 col-md-10">
               <ul>
-                <li data-ng-repeat="doc in docs">
-                  <!-- crbug.com/120693. Anchors need target="_blank", but <base> is taking care of this for us :) -->
-                  <img data-ng-src="{{doc.icon}}"> <a href="{{doc.alternateLink}}">{{doc.title}}</a>  {{doc.size}}
+              	<li ng-hide="actualFolder===rootFolder"><i class="fa fa-chevron-circle-left"></i> <a data-ng-click="fetchDocs(false,previousFolder)">Voltar</a></li>
+                <li data-ng-repeat="doc in filtered = (docs | docFilter:selectedTypes)"">
+                	<img data-ng-src="{{doc.icon}}"> 
+                	<span data-ng-if="doc.mimeType===foldertype"><a data-ng-click="fetchDocs(false,doc)"> {{doc.title}}</a></span>                  
+                  <span data-ng-if="doc.mimeType!==foldertype"><a href="{{doc.alternateLink}}">{{doc.title}}</a></span>
+                  {{doc.size}}
                   <span class="date">{{doc.updatedDate}}</span>
                 </li>
               </ul>

@@ -22,17 +22,30 @@ Author: Eric Bidelman (ericbidelman@chromium.org)
 function GDocs(selector) {
 
   var SCOPE_ = 'https://www.googleapis.com/drive/v2/';
-
+  var ROOTFLD_ = {
+  																id: '0B5acQnb7PM50SHRYdzdTRGFqeFU',
+  																title: ""
+  															};
+  var FOLDERTYPE_ = 'application/vnd.google-apps.folder';
+  
   this.lastResponse = null;
 
   this.__defineGetter__('SCOPE', function() {
     return SCOPE_;
   });
+  
+  this.__defineGetter__('ROOTFLD', function() {
+    return ROOTFLD_;
+  });
+  
+  this.__defineGetter__('FOLDERTYPE', function() {
+    return FOLDERTYPE_;
+  });
 
   this.__defineGetter__('DOCLIST_FEED', function() {
     return SCOPE_ + 'files';
   });
-
+  
   this.__defineGetter__('CREATE_SESSION_URI', function() {
     return 'https://www.googleapis.com/upload/drive/v2/files?uploadType=resumable';
   });

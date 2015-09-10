@@ -38,14 +38,13 @@ imobDbFilters.filter('docFilter', [function () {
 	    return function (documents, selectedDocTypes) {
 		var tempDocuments = [];
 		if (!angular.isUndefined(documents) && !angular.isUndefined(selectedDocTypes) && selectedDocTypes.length > 0) {
-		    
-		    angular.forEach(selectedDocTypes, function (key) {
-			angular.forEach(documents, function (document) {
-			    if (angular.equals(document.tipo, key)) {
-				tempDocuments.push(document);
-			    }
-			});
-		    });                    
+		  angular.forEach(selectedDocTypes, function (key) {
+				angular.forEach(documents, function (document) {
+				   if (angular.equals(document.tipo, key)) {
+							tempDocuments.push(document);
+				   }
+				});
+		  });                    
 		}
 		return tempDocuments;
 	    };

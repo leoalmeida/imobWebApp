@@ -20,7 +20,7 @@ imobDbServices.factory('FileReader', ['$rootScope', '$http', '$templateCache', f
 imobDbServices.factory('gdocs', function() {
   var gdocs = new GDocs();
 
-  var dnd = new DnDFileController('body', function(files) {
+  var dnd = new DnDFileController('.biblioteca', function(files) {
     var $scope = angular.element(this).scope();
     Util.toArray(files).forEach(function(file, i) {
       gdocs.upload(file, function() {

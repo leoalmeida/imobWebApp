@@ -171,6 +171,14 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
 		function($scope, $http,  $indexedDB,  gdocs) {	
 
   $scope.docs = [];
+  $scope.foldertype = gdocs.FOLDERTYPE;
+  $scope.rootFolder = 
+  			$scope.actualFolder = 
+  			$scope.previousFolder = gdocs.ROOTFLD;
+  
+	$scope.checkAll = function () {
+		$scope.selectedDocTypes = _.pluck($scope.tipoDocList, 'tipo');
+	};	
 
   // Response handler that caches file icons in the filesystem API.
   function successCallbackWithFsCaching(resp, status, headers, config) {
@@ -180,7 +188,9 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
 
     resp.items.forEach(function(entry, i) {
       var doc = {
+        id: entry.id,
         title: entry.title,
+        mimeType: entry.mimeType,
         updatedDate: Util.formatDate(entry.modifiedDate),
         updatedDateFull: entry.modifiedDate,
         icon: entry.iconLink,
@@ -232,12 +242,19 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
     $scope.docs = []; // Clear out old results.
   };
 
-  $scope.fetchDocs = function(retry) {
+  $scope.fetchDocs = function(retry,folder) {
+    
+    $scope.previousFolder = $scope.actualFolder;
+    $scope.actualFolder = folder;
+    
     this.clearDocs();
 
     if (gdocs.accessToken) {
       var config = {
-        params: {'alt': 'json'},
+        params: {
+        	'alt': 'json',
+        	'q': "'"+ folder.id +"' in parents"
+        },
         headers: {
           'Authorization': 'Bearer ' + gdocs.accessToken
         }
@@ -259,7 +276,7 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
   $scope.toggleAuth = function(interactive) {
     if (!gdocs.accessToken) {
       gdocs.auth(interactive, function() {
-        $scope.fetchDocs(false);
+        $scope.fetchDocs(false,gdocs.ROOTFLD);
       });
     } else {
       gdocs.revokeAuthToken(function() {});

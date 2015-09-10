@@ -39,7 +39,7 @@ imobDbApp.config( [
     function( $compileProvider )
     {   
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto):/);
-        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|filesystem):/);
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob|filesystem):/);
     }
 ]);
               
