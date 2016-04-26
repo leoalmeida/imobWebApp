@@ -1,0 +1,123 @@
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+  .caixas li {
+      width: 31.333%;
+      margin: 1%;
+      float: left;
+  }
+  .elemento > .squaretitle, label  {
+      font-size: 10px;
+  	  font-size: 1.5vw;
+  }
+  .icon {
+      font-size: 40px;
+  	  font-size: 8vw;
+  }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (orientation : landscape) {
+  .caixas li {
+        width: 19%;
+        margin: 0.5%;
+    }
+  .squaretitle {
+      font-size: 15px;
+  	  font-size: 1.2vw;
+  }
+  .icon {
+      font-size: 40px;
+  	  font-size: 10vw;
+  }
+	p {
+  	  font-size: 20px;
+  	  font-size: 1.8vw;
+	}
+}
+
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (orientation : portrait) {
+  .caixas li {
+      width: 23.75%;
+      margin: 0.625%;
+  }
+
+  .squaretitle {
+      font-size: 10px;
+  	  font-size: 1.5vw;
+  }
+  .icon {
+      font-size: 40px;
+  	  font-size: 8vw;
+  }
+	p {
+  	  font-size: 18px;
+  	  font-size: 2.5vw;
+	}
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1224px) {
+  .caixas li {
+      width: 15.8333%;
+      margin: .4166%;
+  }
+  .squaretitle {
+      font-size: 15px;
+  	  font-size: 1.2vw;
+  }
+  .icon {
+      font-size: 25px;
+  	  font-size: 6vw;
+  }
+	p {
+  	  font-size: 20px;
+  	  font-size: 1.5vw;
+	}
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+  .caixas li {
+      width: 13.571%;
+      margin: .357%;
+  }
+  .squaretitle {
+      font-size: 15px;
+  	  font-size: 1.2vw;
+  }
+  .icon {
+      font-size: 20px;
+  	  font-size: 5vw;
+  }
+	p {
+  	  font-size: 15;
+  	  font-size: 1.5vw;
+	}
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5) and (max-device-width : 700px),
+only screen and (min-device-pixel-ratio : 1.5)  and (max-device-width : 700px){
+  .squaretitle {
+      font-size: 10px;
+  	  font-size: 0.9vw;
+  }
+  .icon {
+      font-size: 20px;
+  	  font-size: 5vw;
+  }
+	p {
+  	  font-size: 10px;
+  	  font-size: 1.5vw;
+	}
+}

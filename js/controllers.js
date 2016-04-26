@@ -41,61 +41,61 @@ var TaxaSchema = function() {
   };
 };
 
-var TaxaSchema = (function () { 
-    
+var TaxaSchema = (function () {
+
     // private static
-    var nextId = 1; 
+    var nextId = 1;
     var valorTotal = 0.00;
-    
+
     // constructor
     var taxa = function () {
               // private
               this.id = nextId++;
-              this.tipo = 'Condominio';    
+              this.tipo = 'Condominio';
               this.valor = 0;
-              this.pagamento = Date.now(); 
+              this.pagamento = Date.now();
     };
-    
+
     taxa.prototype.getTipo = function() {
         return this.tipo;
     }
-       
+
     taxa.prototype.setTipo = function(value) {
         this.tipo = value;
     }
-    
+
     taxa.prototype.getPagamento = function() {
         return this.pagamento;
-    }    
-    
+    }
+
     taxa.prototype.setPagamento = function(value) {
         this.pagamento = value;
     }
-    
+
     taxa.prototype.getValor = function() {
         return this.valor;
     };
-    
+
     taxa.prototype.setValor = function(value) {
         this.valor = value;
     };
-    
+
     // public static
     taxa.get_nextId = function () {
         return nextId;
     };
-    
+
     taxa.get_valorTotal = function (lista) {
         valorTotal = 0.00;
         for ( var item in lista )(
           valorTotal += lista[item].valor
-        );         
+        );
         return valorTotal;
     };
 
     // public (shared across instances)
     taxa.prototype = {
-             
+
     };
 
     return taxa;
@@ -104,34 +104,34 @@ var TaxaSchema = (function () {
 imobDbControllers.config(function ($indexedDBProvider) {
 	$indexedDBProvider
       .connection('imobapp-localdb')
-      .upgradeDatabase(7, function(event, db, tx){      		
-      		
+      .upgradeDatabase(7, function(event, db, tx){
+
           var osContratos = db.createObjectStore(OBJECT_STORE_CONTRATOS, { keyPath: "id", autoIncrement:true });
           osContratos.createIndex("cpfLocador_idx", "cpfLocador", { unique: false , multientry: true });
           osContratos.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
-        
+
           var osImoveis = db.createObjectStore(OBJECT_STORE_IMOVEIS, { keyPath: "id", autoIncrement:true });
           osImoveis.createIndex("cpfLocador_idx", "cpfLocador", { unique: false});
           osImoveis.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false });
           osImoveis.createIndex("bairro_idx","bairro", 	{unique:false});
           osImoveis.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
-          
+
           var osLocatarios = db.createObjectStore(OBJECT_STORE_CLIENTES, { keyPath: "cpf"});
-          osLocatarios.createIndex("cpf_idx", "cpfCliente", { unique: false });	
-          osLocatarios.createIndex("tipo_idx", "tipo", { unique: false, multientry: true });			
+          osLocatarios.createIndex("cpf_idx", "cpfCliente", { unique: false });
+          osLocatarios.createIndex("tipo_idx", "tipo", { unique: false, multientry: true });
           osLocatarios.createIndex("doc_idx", "docs", { unique: false, multientry: true });
           osLocatarios.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
-        
+
           var osEventos = db.createObjectStore(OBJECT_STORE_EVENTOS, { keyPath: "id", autoIncrement:true });
           osEventos.createIndex("idContrato_idx", "idContrato", { unique: false });
           osEventos.createIndex("tipoEvento_idx", "tipoEvento", { unique: false });
           osEventos.createIndex("acaoEvento_idx", "acaoEvento", { unique: false });
           osEventos.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
-          
+
       })
       .upgradeDatabase(8, function(event, db, tx){
           var osReferencias = db.createObjectStore(OBJECT_STORE_REFTYPES, { keyPath: "id", autoIncrement:true });
-          osReferencias.createIndex("reftype_idx", "tipo", { unique: false });          
+          osReferencias.createIndex("reftype_idx", "tipo", { unique: false });
       });
 });
 
@@ -139,21 +139,21 @@ function onError(e) {
   console.log(e);
 }
 
-imobDbControllers.controller('AdminUserCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location', '$http', 'gdocs', 
+imobDbControllers.controller('AdminUserCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location', '$http', 'gdocs',
 		function($scope, $log, $rootScope, $routeParams, $location, $http,  gdocs) {
-		  
+
 
   // Toggles the authorization state.
   $scope.toggleAuth = function(interactive) {
     if (!gdocs.accessToken) {
-      gdocs.auth(interactive, function() {        
-          $location.path("/home").replace(); 
+      gdocs.auth(interactive, function() {
+          $location.path("/home").replace();
       });
     } else {
       gdocs.revokeAuthToken(function() {
-          $location.path("/login").replace(); 
+          $location.path("/login").replace();
       });
-      
+
     }
   }
   // Controls the label of the authorize/deauthorize button.
@@ -164,21 +164,21 @@ imobDbControllers.controller('AdminUserCtrl', ['$scope', '$log', '$rootScope', '
       return 'Google Login >>';
   };
 
-  $scope.toggleAuth(false);		  
+  $scope.toggleAuth(false);
 
 }]);
 imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB', 'gdocs',
-		function($scope, $http,  $indexedDB,  gdocs) {	
+		function($scope, $http,  $indexedDB,  gdocs) {
 
   $scope.docs = [];
   $scope.foldertype = gdocs.FOLDERTYPE;
-  $scope.rootFolder = 
-  			$scope.actualFolder = 
+  $scope.rootFolder =
+  			$scope.actualFolder =
   			$scope.previousFolder = gdocs.ROOTFLD;
-  
+
 	$scope.checkAll = function () {
 		$scope.selectedDocTypes = _.pluck($scope.tipoDocList, 'tipo');
-	};	
+	};
 
   // Response handler that caches file icons in the filesystem API.
   function successCallbackWithFsCaching(resp, status, headers, config) {
@@ -243,10 +243,10 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
   };
 
   $scope.fetchDocs = function(retry,folder) {
-    
+
     $scope.previousFolder = $scope.actualFolder;
     $scope.actualFolder = folder;
-    
+
     this.clearDocs();
 
     if (gdocs.accessToken) {
@@ -265,7 +265,7 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
         error(function(data, status, headers, config) {
           if (status == 401 && retry) {
             gdocs.removeCachedAuthToken(
-                gdocs.auth.bind(gdocs, true, 
+                gdocs.auth.bind(gdocs, true,
                     $scope.fetchDocs.bind($scope, false)));
           }
         });
@@ -292,28 +292,28 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
       return 'Authorize';
   };
 
-  $scope.toggleAuth(false);		  
-		  
+  $scope.toggleAuth(false);
+
 }]);
-	
+
 
 
 
 imobDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB', 'PostService','FileReader',
-		function($scope,  $indexedDB,  PostService, FileReader) {	
-	
+		function($scope,  $indexedDB,  PostService, FileReader) {
+
   $scope.setMaster = function(section) {
 	    $scope.selected = section;
 	};
-	
+
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
 	    init();
 		  buscaClientes();
-		  buscaEventos();		  
+		  buscaEventos();
 	}
-	
+
 	function init(){
       FileReader.readAsJson('data/configFile.json', $scope)
             .then(function(result) {
@@ -322,43 +322,43 @@ imobDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB', 'PostService',
                 });
             });
 	 	};
-	
+
   function buscaClientes() {
     $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
-	    store.getAll().then(function(clientesList) {  
+	    store.getAll().then(function(clientesList) {
         // Update scope
         $scope.listViewClientes = clientesList;
       });
-    });	
+    });
 	};
-	
+
   function buscaEventos() {
     $indexedDB.openStore(OBJECT_STORE_EVENTOS, function (store){
-	    store.getAll().then(function(eventosList) {  
+	    store.getAll().then(function(eventosList) {
         // Update scope
         $scope.listViewEventos = eventosList;
       });
-    });	
-	};	
-	
+    });
+	};
+
 	function enviaDocumentos() {
 	      $indexedDB.openStore(OBJECT_STORE_DOCUMENTS, function (store){
             store.getAll().then(function(itemsList) {
                 var objtype = "docs";
                 var objtags = "Documentos";
-                
+
                 $scope.msgInformativa = options.api.msgs.syncing;
                 $scope.showDetalhes = false;
-                
+
                 var publishItem = {
                         type: objtype,
                         subtype: value.tipo,
                         title: value.titulo,
                         tags: objtags,
-                        is_published: true,                        
-                        content: JSON.stringify(value)                                                
+                        is_published: true,
+                        content: JSON.stringify(value)
                 };
-                  
+
                 PostService.publishdocs(publishItem).success(function(data) {
                     chrome.extension.getBackgroundPage().console.log(data.status);
                     chrome.extension.getBackgroundPage().console.log(data.statusMessage);
@@ -373,21 +373,21 @@ imobDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB', 'PostService',
                 }).error(function(status, data) {
                     chrome.extension.getBackgroundPage().console.log(status);
                     chrome.extension.getBackgroundPage().console.log(data);
-                });                               
+                });
             });
             chrome.extension.getBackgroundPage().console.log(status);
-            chrome.extension.getBackgroundPage().console.log("Documento enviado");        	
+            chrome.extension.getBackgroundPage().console.log("Documento enviado");
         });
   };
-			
+
 }]);
 
-imobDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB', 
-		function($scope,  $indexedDB) {
-		  
+imobDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB', '$log',
+		function($scope,  $indexedDB, $log) {
+
 	$scope.objects = [];
 	$scope.entidade = "Clientes";
-	$scope.formatosSelecionados = [];	
+	$scope.formatosSelecionados = [];
 	$scope.setSelectedDocTypes = function () {
 		var tipo = this.tipoDoc.tipo;
 		if (_.contains($scope.formatosSelecionados, tipo)) {
@@ -396,51 +396,54 @@ imobDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 		    $scope.formatosSelecionados.push(tipo);
 		}
 		return false;
-	};	
+	};
 	$scope.isChecked = function (id) {
 		if (_.contains($scope.formatosSelecionados, id)) {
 		    return 'fa fa-check pull-right';
 		}
 		return false;
-	};	
+	};
 	$scope.checkAll = function () {
 		$scope.formatosSelecionados = _.pluck($scope.tipoDocList, 'tipo');
-	};	
+	};
 	$scope.setMaster = function(section) {
 	    $scope.selected = section;
-	};	
+	};
 	$scope.isSelected = function(section) {
 	    return $scope.selected === section;
 	};
 	$scope.removeCliente = function(key) {
-		clientesObjectStore.delete(key).then(function() {			
-			buscaLocadores();
+		$indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
+						store.delete(key).then(function(e){
+								$log.info('Cliente' + key + 'removed at:' + new Date());
+								$location.path("./cadastro/clientes").replace();
+						});
 		});
 	};
-	
+
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
 		buscaClientes();
 		buscaRefTypes();
 	}
-	
+
 	function buscaRefTypes() {
-	  $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){          
+	  $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_DOC)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  //tipoDoc = typeList;                
+                  //tipoDoc = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });              
-      }, 'readonly').then(null, function(error) {        
+          });
+      }, 'readonly').then(null, function(error) {
         chrome.extension.getBackgroundPage().console.log(error);
-      }); 
+      });
   };
-	
+
   function buscaClientes() {
     $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
 	    store.getAll().then(function(clientesList) {
@@ -448,22 +451,22 @@ imobDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 			});
 		});
 	}
-	
+
 	/*
 	function buscaDocumentos() {
-	    refObjectStore.getAll().then(function(docList) {  
+	    refObjectStore.getAll().then(function(docList) {
           // Create the mock file:
           var mockFile = { name: "Filename", size: 12345 };
-          
+
           // Call the default addedfile event handler
           Dropzone.options.uploadSection.emit("addedfile", mockFile);
-          
+
           // And optionally show the thumbnail of the file:
            Dropzone.options.uploadSection.emit("thumbnail", mockFile, "/image/url");
-          
+
           // Make sure that there is no progress bar, etc...
            Dropzone.options.uploadSection.emit("complete", mockFile);
-          
+
           // If you use the maxFiles option, make sure you adjust it to the
           // correct amount:
           var existingFileCount = 1; // The number of files already uploaded
@@ -473,103 +476,103 @@ imobDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 
 }]);
 
-imobDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter', 'cepService', 
+imobDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter', 'cepService',
 		function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter, cepService) {
-		
+
 	if ($routeParams.type === "edit") {$scope.entidade = "Alterar Cliente";}
 	else {$scope.entidade = "Incluir Cliente";}
-	
-	
+
+
 	$scope.novocliente = {};
 	$scope.endereco = {};
 	$scope.telefone = {};
 	$scope.documentos = [];
 	$scope.selectedDoc = {};
 	$scope.novocliente.tipoCliente = [];
-	$scope.novocliente.enderecos = [];	
+	$scope.novocliente.enderecos = [];
 	$scope.novocliente.telefones = [];
 	$scope.selectedDoc.name = "Teste Selected";
-	$scope.selectedDoc.tags = [];		
+	$scope.selectedDoc.tags = [];
 	$scope.novocliente.documentos = [];
-	
+
 	$scope.incluirEndereco = function(){
       $scope.novocliente.enderecos.push($scope.endereco);
       $scope.endereco = {};
 	};
 	$scope.removeEndereco = function(index){
-		  $scope.novocliente.enderecos.splice(index, 1);		
-	};	
+		  $scope.novocliente.enderecos.splice(index, 1);
+	};
 	$scope.incluirTelefone = function(){
 	    if ($scope.telefone.numero !== '' && $scope.telefone.tipo !== ''){
           $scope.novocliente.telefones.push($scope.telefone);
-          $scope.telefone = {};          
+          $scope.telefone = {};
       }
-	};	
+	};
 	$scope.removeTelefone = function(index){
 	    $scope.novocliente.telefones.splice(index, 1);
-	};	
+	};
 	$scope.incluirTag = function(){
 	    if ($scope.tag !== ''){
           $scope.selectedDoc.tags.user.push($scope.tag);
           $scope.tag = '';
           $('#tag').focus();
       }
-	};	
+	};
 	$scope.removeTag = function(index){
 	    $scope.selectedDoc.tags.user.splice(index, 1);
-	};		
+	};
 	$scope.selectDoc = function(index){
 	    $scope.selectedDoc = $scope.document;
-	};	
-	$scope.enterKey = function(keyEvent) {	  
+	};
+	$scope.enterKey = function(keyEvent) {
     if (keyEvent.which === 13)
         $scope.incluirTag();
-  }	
+  }
 	$scope.cancel = function() {
-      //TODO		
-	};	    
-	$scope.getCEP = function(){	    
-	    var teste = cepService.get($scope.endereco.cep).then(function(response) {	        
+      //TODO
+	};
+	$scope.getCEP = function(){
+	    var teste = cepService.get($scope.endereco.cep).then(function(response) {
 	        $scope.endereco.rua = response.data.logradouro;
           $scope.endereco.bairro = response.data.bairro;
-          $scope.endereco.cidade = response.data.localidade;      
+          $scope.endereco.cidade = response.data.localidade;
           $scope.endereco.uf = response.data.uf;
           $scope.endereco.pais = "Brasil"
       });
- 	};	
-	$scope.submit = function() {      
-      $scope.novocliente.updated = $filter('dateFormat')(new Date(),false);      
+ 	};
+	$scope.submit = function() {
+      $scope.novocliente.updated = $filter('dateFormat')(new Date(),false);
       if ($routeParams.type !== "edit"){
           $scope.novocliente.created = $filter('dateFormat')(new Date(),false);
           $scope.novocliente.synced = null;
-      }  
-      $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){              
+      }
+      $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
               store.upsert($scope.novocliente).then(function(e){
                     $log.info('Cliente' + $scope.novocliente.nome + 'included with CPF:'+  $scope.novocliente.cpf +  ' at:' + new Date());
                     $location.path("/cadastro/clientes").replace();
               });
       });
 	};
-	
+
 	if($indexedDB.onDatabaseError) {
 		  $location.path('/unsupported');
 	} else {
       buscaInfo();
       buscaRefTypes();
 	}
-	
+
 	$('#fileModal').on('show.bs.modal', function (event) {
       $scope.selectedDoc = $(event.relatedTarget)[0];
       $scope.$apply();
-  })		
-	
+  })
+
 	function buscaRefTypes() {
-	    $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){          
+	    $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_CLI)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposClientes = typeList;                
+                  $scope.tiposClientes = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
@@ -578,36 +581,36 @@ imobDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope'
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposTelefones = typeList;                
+                  $scope.tiposTelefones = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });  
+          });
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_END)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposEnderecos = typeList;                
+                  $scope.tiposEnderecos = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });  
+          });
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_IMV)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposImoveis = typeList;                
+                  $scope.tiposImoveis = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });  
-      }, 'readonly').then(null, function(error) {        
+          });
+      }, 'readonly').then(null, function(error) {
         chrome.extension.getBackgroundPage().console.log(error);
-      }); 
+      });
   };
-	
-	function buscaInfo() {		
-		if($routeParams.id) {		      
+
+	function buscaInfo() {
+		if($routeParams.id) {
           $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
               store.findWhere(store.query().$eq($routeParams.id)).then(function(cliente) {
                   if (imovel.length === 0) {
@@ -629,7 +632,7 @@ imobDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 	$scope.objects = [];
 	$scope.entidade = "Imóveis";
 	$scope.formatosSelecionados = [];
-	
+
 	$scope.setSelectedDocTypes = function () {
 		var tipo = this.tipoDoc.tipo;
 		if (_.contains($scope.formatosSelecionados, tipo)) {
@@ -638,7 +641,7 @@ imobDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 		    $scope.formatosSelecionados.push(tipo);
 		}
 		return false;
-	};	
+	};
 	$scope.isChecked = function (id) {
 		if (_.contains($scope.formatosSelecionados, id)) {
 		    return 'fa fa-check pull-right';
@@ -655,45 +658,45 @@ imobDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 	    return $scope.selected === section;
 	};
 	$scope.removeImovel = function(key) {
-		imoveisObjectStore.delete(key).then(function() {			
+		imoveisObjectStore.delete(key).then(function() {
 			buscaImoveis();
 		});
 	};
-	
+
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
 		buscaImoveis();
 	}
-	
+
 	function buscaImoveis() {
     $indexedDB.openStore(OBJECT_STORE_IMOVEIS, function (store){
 		      store.getAll().then(function(imoveisList) {
 		          $scope.listView = imoveisList;
           }, 'readonly').then(null, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });    
+          });
     });
-	}	
-			
+	}
+
 }]);
 
 imobDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter','cepService',
     function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter, cepService) {
-      
+
     if ($routeParams.type === "edit") {$scope.entidade = "Alterar Imóvel";}
     else {$scope.entidade = "Incluir Imóvel";}
-        
+
     $scope.novoimovel = {};
     $scope.novoimovel.proprietarios = [];
     $scope.novoimovel.documentos = [];
     $scope.proprietario = {};
-    
+
     $scope.today= function() {
         $scope.dt = new Date();
     };
-    $scope.today();    
-    $scope.incluirProprietario = function(){        
+    $scope.today();
+    $scope.incluirProprietario = function(){
         if ($scope.proprietario.identificador !== ''){
             $scope.novoimovel.proprietarios.push($scope.proprietario.obj);
             $scope.proprietario = {};
@@ -703,11 +706,11 @@ imobDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope',
         $scope.novoimovel.proprietarios.splice(index, 1);
     };
     $scope.getCEP = function(){
-	  //if($scope.endereco.cep) return '';	    
-	    var teste = cepService.get($scope.novoimovel.endereco.cep).then(function(response) {	        
+	  //if($scope.endereco.cep) return '';
+	    var teste = cepService.get($scope.novoimovel.endereco.cep).then(function(response) {
 	        $scope.novoimovel.endereco.rua = response.data.logradouro;
           $scope.novoimovel.endereco.bairro = response.data.bairro;
-          $scope.novoimovel.endereco.cidade = response.data.localidade;      
+          $scope.novoimovel.endereco.cidade = response.data.localidade;
           $scope.novoimovel.endereco.uf = response.data.uf;
           $scope.novoimovel.endereco.pais = "Brasil"
       });
@@ -715,36 +718,36 @@ imobDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope',
     $scope.cancel = function() {
         //TODO
     };
-    $scope.submit = function() {        
-        $scope.novoimovel.updated = $filter('dateFormat')(new Date(),false);        
+    $scope.submit = function() {
+        $scope.novoimovel.updated = $filter('dateFormat')(new Date(),false);
         if ($routeParams.type !== "edit"){
             $scope.novoimovel.created = $filter('dateFormat')(new Date(),false);
             $scope.novoimovel.synced = null;
         }
-        $indexedDB.openStore(OBJECT_STORE_IMOVEIS, function (store){              
+        $indexedDB.openStore(OBJECT_STORE_IMOVEIS, function (store){
             store.upsert($scope.novoimovel).then(function(e){
                  $log.info('Evento' + $scope.novoimovel.id + 'incluído em:'+  $scope.novoimovel.updated +  ' at:' + new Date());
                  $location.path('/cadastro/imoveis').replace();
             });
         });
-      
-    };    
-  
+
+    };
+
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
-    } else {       
+    } else {
       buscaRefTypes();
       buscaInfo();
       buscarClientes();
     }
-    
-    function buscaRefTypes() {	  
-        $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){          
+
+    function buscaRefTypes() {
+        $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_IMV)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposImoveis = typeList;                
+                  $scope.tiposImoveis = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
@@ -753,23 +756,23 @@ imobDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope',
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposSituacao = typeList;                
+                  $scope.tiposSituacao = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });          
+          });
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_PROP)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposProprietarios = typeList;                
+                  $scope.tiposProprietarios = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
           });
         });
     }
-  
+
     function buscarClientes(){
           $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
               store.getAll().then(function(itemsList) {
@@ -779,38 +782,38 @@ imobDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope',
               });
           });
     }
-    
-    function buscaInfo() {		
+
+    function buscaInfo() {
         if($routeParams.id) {
           $indexedDB.openStore(OBJECT_STORE_IMOVEIS, function (store){
               store.findWhere(store.query().$eq($routeParams.id)).then(function(imovel) {
                   if (imovel.length === 0) {
                         chrome.extension.getBackgroundPage().console.log('No objects found');
                   } else {
-                        $scope.novoimovel.id = imovel.value.id;              
+                        $scope.novoimovel.id = imovel.value.id;
                         $scope.novoimovel.descricao = imovel.value.descricao;
                         $scope.novoimovel.titulo = imovel.value.titulo;
                         $scope.novoimovel.proprietarios = imovel.value.proprietarios;
                         $scope.novoimovel.tipoImovel = imovel.value.tipoImovel;
                         $scope.novoimovel.tipoSituacao = imovel.value.tipoSituacao;
                         $scope.novoimovel.endereco = imovel.value.endereco;
-                        $scope.novoimovel.documentos = imovel.value.documentos;            
+                        $scope.novoimovel.documentos = imovel.value.documentos;
                   };
               }, function(error) {
                 chrome.extension.getBackgroundPage().console.log(error);
               });
-          });         
+          });
         }
     }
 }]);
 
 imobDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 		function($scope,  $indexedDB) {
-		  
+
 	$scope.objects = [];
 	$scope.entidade = "Contratos";
 	$scope.formatosSelecionados = [];
-	
+
 	$scope.setSelectedDocTypes = function () {
 		var tipo = this.tipoDoc.tipo;
 		if (_.contains($scope.formatosSelecionados, tipo)) {
@@ -836,17 +839,17 @@ imobDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 	    return $scope.selected === section;
 	};
 	$scope.removeContrato = function(key) {
-		contratosObjectStore.delete(key).then(function() {			
+		contratosObjectStore.delete(key).then(function() {
 			buscaContratos();
 		});
 	};
-	
+
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
 		buscaContratos();
 	}
-	
+
   function buscaContratos() {
         $indexedDB.openStore(OBJECT_STORE_CONTRATOS, function (store){
               store.getAll().then(function(contratosList) {
@@ -854,16 +857,16 @@ imobDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
               }, 'readonly').then(null, function(error) {
                 chrome.extension.getBackgroundPage().console.log(error);
               });
-        });		
-	};	
+        });
+	};
 }]);
 
 imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
     function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
-      
+
     if ($routeParams.type === "edit") {$scope.entidade = "Alterar Contrato";}
     else {$scope.entidade = "Incluir Contrato";}
-    
+
     $scope.novocontrato = {};
     $scope.locatario = {};
     $scope.fiador = {};
@@ -872,12 +875,12 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
     $scope.novocontrato.locatarios = [];
     $scope.novocontrato.fiadores = [];
     $scope.novocontrato.situacao = "ativo";
-    
-    
+
+
     $scope.today= function() {
         $scope.dt = new Date();
-    };    
-    $scope.today();    
+    };
+    $scope.today();
     $scope.clear = function () {
         $scope.dt = null;
     };
@@ -886,79 +889,79 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
         formatMonth: 'MM',
         formatYear: 'yyyy',
         startingDay: 1
-    };    
+    };
     $scope.incluirLocatario = function(){
         if ($scope.locatario !== ''){
             $scope.novocontrato.locatarios.push($scope.locatario.obj);
             $scope.locatario = {};
         }
-    };    
+    };
     $scope.removeLocatario = function(index){
         $scope.novocontrato.locatarios.splice(index, 1);
-    };        
+    };
     $scope.incluirFiador = function(){
         if ($scope.fiador !== ''){
             $scope.novocontrato.fiadores.push($scope.fiador.obj);
             $scope.fiador = {};
         }
-    };    
+    };
     $scope.removeFiador = function(index){
         $scope.novocontrato.fiadores.splice(index, 1);
-    };    
+    };
     $scope.cancel = function() {
         //TODO
-    };  
+    };
     $scope.submit = function() {
-        
+
         $scope.novocontrato.updated = $filter('dateFormat')(new Date(),false);
-        
+
         if ($routeParams.type !== "edit"){
             $scope.novocontrato.created = $filter('dateFormat')(new Date(),false);
             $scope.novocontrato.synced = null;
         }
-        
-        $scope.novocontrato.situacao = "pendente";       
-        
+
+        $scope.novocontrato.situacao = "pendente";
+
         $scope.novocontrato.dataInicio = $filter('dateFormat')($scope.novocontrato.updated, true);
         $scope.novocontrato.dataVencimento = $filter('dateFormat')($scope.picker, true);
-        
-        $scope.novocontrato.imovel = $scope.imovel.obj;   
-        
+
+        $scope.novocontrato.imovel = $scope.imovel.obj;
+
         //alert($filter('json')($scope.novocontrato));
-        
-        $indexedDB.openStore(OBJECT_STORE_CONTRATOS, function (store){              
+
+        $indexedDB.openStore(OBJECT_STORE_CONTRATOS, function (store){
               store.upsert($scope.novocontrato)
               .then(function(e){
                    $log.info('Evento' + $scope.novocontrato.id + 'incluído com vencimento em:'+  $scope.novocontrato.dataVencimento +  ' at:' + new Date());
                    $location.path('/cadastro/contratos').replace();
               });
         });
-      
+
     };
-    
+
     function buscaRefTypes() {
-      $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){          
+      $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_SIT)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposSituacao = typeList;                
+                  $scope.tiposSituacao = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });          
+          });
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_CONT)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposContrato = typeList;                
+                  $scope.tiposContrato = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
           });
       });
     }
-    
+
     function buscarClientes(){
         $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
               store.getAll().then(function(itemsList) {
@@ -968,7 +971,7 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
               });
         });
     }
-    
+
     function buscarImoveis(){
         $indexedDB.openStore(OBJECT_STORE_IMOVEIS, function (store){
               store.getAll().then(function(itemsList) {
@@ -978,7 +981,7 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
               });
         });
     }
-	
+
     function buscaInfo() {
         if($routeParams.id) {
           //var myQuery = $indexedDB.queryBuilder().$eq(Number($routeParams.id)).$asc().compile();
@@ -988,7 +991,7 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
                         chrome.extension.getBackgroundPage().console.log('No objects found');
                   } else {
                         $scope.novocontrato.id = contrato.value.id;
-                        $scope.novocontrato.dataInicio = contrato.value.dataInicio;              
+                        $scope.novocontrato.dataInicio = contrato.value.dataInicio;
                         $scope.novocontrato.dataVencimento = contrato.value.dataVencimento;
                         $scope.novocontrato.imovel = contrato.value.imovel;
                         $scope.novocontrato.fiadores = contrato.value.fiadores;
@@ -996,7 +999,7 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
                         $scope.novocontrato.locatarios = contrato.value.locatarios;
                         $scope.novocontrato.situacao = contrato.value.situacao;
                         $scope.novocontrato.tipoContrato = contrato.value.tipoContrato
-                        $scope.novocontrato.documentos = contrato.value.documentos;              
+                        $scope.novocontrato.documentos = contrato.value.documentos;
                   };
               }, function(error) {
                 chrome.extension.getBackgroundPage().console.log(error);
@@ -1004,7 +1007,7 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
           });
         }
     }
-    
+
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
     } else {
@@ -1013,14 +1016,14 @@ imobDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope
       buscarClientes();
       buscarImoveis();
     }
-			
+
 }]);
 
 imobDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
 		function($scope,  $indexedDB) {
 
 	$scope.entidade = "Eventos";
-	
+
 	$scope.setMaster = function(section) {
 	    $scope.selected = section;
 	};
@@ -1029,63 +1032,63 @@ imobDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
 	};
   $scope.criaPDF = function() {
      var pdf = new jsPDF();
-     var string = $('.modal-body')[0].innerText.split('\n'); 
+     var string = $('.modal-body')[0].innerText.split('\n');
      var i = 1;
      for (var index in string){
-        
+
          if ((index == 21)) continue;
          else if ((index == 0) || (index > 21) || (string[index]=="")) {
              pdf.text(10, 10 * i++,string[index]);
          }else if ((index%2) || (index == 20) ){
              var str = string[index] + string[++index];
              pdf.text(10, 10 * i++,str);
-         };        
+         };
      }
-     string= pdf.output();    
+     string= pdf.output();
      document.location.href = 'data:application/pdf;base64,base64encodedpdf' + Base64.encode(string);
   };
-  
+
   //Modal controls
   /*$scope.animationsEnabled = true;
-  
+
   $scope.open = function(size) {
-    
-  } 
+
+  }
 		*/
 	$scope.removeEvento = function(key) {
       $indexedDB.openStore(OBJECT_STORE_EVENTOS, function (store){
-        store.delete(key).then(function() {			
+        store.delete(key).then(function() {
             buscaEventos();
         });
       });
 	};
-	
+
 	if($indexedDB.onDatabaseError) {
 		  $location.path('/unsupported');
-	} else {	
+	} else {
 		  buscaEventos();
 	};
-	
+
 	function buscaEventos() {
       $indexedDB.openStore(OBJECT_STORE_EVENTOS, function (store){
         store.getAll().then(function(eventosList) {
-             $scope.listView = eventosList;        
+             $scope.listView = eventosList;
         });
       });
   };
-			
+
 }]);
 
 imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
     function($scope, $modal, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
-      
+
     if ($routeParams.type === "edit") {$scope.entidade = "Alterar Evento";}
     else {$scope.entidade = "Incluir Evento";}
-        
+
     $scope.itemsList = [];
     $scope.tiposTaxa = [];
     $scope.novoevento = {};
-    $scope.novoevento.situacao = "ativo";    
+    $scope.novoevento.situacao = "ativo";
     $scope.novoevento.tipo = 'pagamento';
     $scope.novoevento.cobranca = 0;
     $scope.novoevento.comissao = 0;
@@ -1094,39 +1097,39 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
     $scope.novoevento.listaTaxas = [];
     $scope.novoevento.listaTaxas.push(new TaxaSchema());
     $scope.novoevento.totaltaxas = 0;
-           
+
     $scope.atualizaValores = function() {
         $scope.novoevento.totaltaxas = TaxaSchema.get_valorTotal($scope.novoevento.listaTaxas);
         $scope.novoevento.cobranca = $scope.novoevento.aluguel + $scope.novoevento.totaltaxas;
         $scope.novoevento.comissao = $scope.novoevento.cobranca * 0.08;
-        $scope.novoevento.deposito =  $scope.novoevento.cobranca - $scope.novoevento.totaltaxas - $scope.novoevento.comissao;     
-    };    
+        $scope.novoevento.deposito =  $scope.novoevento.cobranca - $scope.novoevento.totaltaxas - $scope.novoevento.comissao;
+    };
     $scope.incluirTaxa = function(){
       $scope.novoevento.listaTaxas.push(new TaxaSchema());
-    };    
+    };
     $scope.removerTaxa = function(key){
       $scope.novoevento.listaTaxas.splice(key,1);
-    };   
+    };
     $scope.cancel = function() {
         //TODO
-    };      
-    $scope.submit = function() {        
+    };
+    $scope.submit = function() {
         $scope.novoevento.updated = $filter('dateFormat')(new Date(),false);
-        
+
         if ($routeParams.type !== "edit"){
             $scope.novoevento.created = $filter('dateFormat')(new Date(),false);
             $scope.novoevento.synced = null;
-        }        
+        }
         var dtAvencer = new Date();
         dtAvencer.setDate(dtAvencer + 7);
-        
+
         if ($scope.picker < $scope.novoevento.updated) {$scope.novoevento.situacao = "vencido";}
         else if ($scope.picker < dtAvencer) {$scope.novoevento.situacao = "avencer";}
         else {$scope.novoevento.situacao = "ativo";}
-        
+
         $scope.novoevento.dataInicio = $filter('dateFormat')($scope.novoevento.updated, true);
-        $scope.novoevento.dataVencimento = $filter('dateFormat')($scope.picker, true); 
-        
+        $scope.novoevento.dataVencimento = $filter('dateFormat')($scope.picker, true);
+
         $indexedDB.openStore(OBJECT_STORE_EVENTOS, function (store){
           store.upsert($scope.novoevento)
                   .then(function(e){
@@ -1136,7 +1139,7 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
         });
     };
     $scope.today = function() {
-      $scope.dt = new Date();   
+      $scope.dt = new Date();
     };
     $scope.today();
     $scope.clear = function () {
@@ -1156,8 +1159,8 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
           formatMonth: 'MMMM',
           formatYear: 'yyyy',
           startingDay: 1
-    };      
- 
+    };
+
     $scope.status = {
       opened: false
     };
@@ -1175,14 +1178,14 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
             }
           }
         });
-    
+
         modalInstance.result.then(function (selectedItem) {
           $scope.selected = selectedItem;
         }, function () {
           $log.info('Modal dismissed at: ' + new Date());
         });
     };
-    
+
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
     } else {
@@ -1190,14 +1193,14 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
       buscaInfo();
       buscaClientes();
     }
-    
+
     function buscaRefTypes() {
-      $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){          
+      $indexedDB.openStore(OBJECT_STORE_REFTYPES, function (store){
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_EVT)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposEvento = typeList;                
+                  $scope.tiposEvento = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
@@ -1206,35 +1209,35 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposSituacao = typeList;                
+                  $scope.tiposSituacao = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });      
+          });
           store.findWhere(store.query().$index('reftype_idx').$eq(REFTYPES_TAXA)).then(function(typeList) {
               if (typeList.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
               } else {
-                  $scope.tiposTaxa = typeList;                
+                  $scope.tiposTaxa = typeList;
               };
           }, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-          });      
+          });
       }, 'readonly').then(null, function(error) {
         chrome.extension.getBackgroundPage().console.log(error);
-      }); 
-    }    
+      });
+    }
     function buscaClientes() {
       $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
           store.getAll().then(function(itemsList) {
               $scope.itemsList = itemsList;
           });
-      }); 
+      });
     };
-    
-    function buscaInfo() {      
+
+    function buscaInfo() {
       if($routeParams.id) {
-        $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){          
+        $indexedDB.openStore(OBJECT_STORE_CLIENTES, function (store){
           store.findWhere(store.query().$eq($routeParams.id)).then(function(evento) {
               if (evento.length === 0) {
                 chrome.extension.getBackgroundPage().console.log('No objects found');
@@ -1253,17 +1256,17 @@ imobDbControllers.controller('EventosEditCtrl', ['$scope', '$modal', '$log', '$r
                   $scope.novoevento.deposito =  evento.value.deposito;
                   $scope.novoevento.inquilino = evento.value.inquilino;
                   $scope.novoevento.proprietario = evento.value.proprietario;
-                  $scope.novoevento.listaTaxas = evento.value.listaTaxas;          
+                  $scope.novoevento.listaTaxas = evento.value.listaTaxas;
               };
           }, function(error) {
               chrome.extension.getBackgroundPage().console.log(error);
-          });  
+          });
         }, 'readonly').then(null, function(error) {
             chrome.extension.getBackgroundPage().console.log(error);
-        }); 
+        });
       }
     }
-    
+
 }]);
 
 imobDbControllers.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {

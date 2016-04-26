@@ -1,0 +1,118 @@
+/* Mobile First ----------- */
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+:required {
+    border-color: #88a;
+    -webkit-box-shadow: 0 0 .4em rgba(0, 0, 255, .5);
+    -moz-box-shadow: 0 0 .4em rgba(0, 0, 255, .5);
+    -o-box-shadow: 0 0 .4em rgba(0, 0, 255, .5);
+    -ms-box-shadow: 0 0 .4em rgba(0, 0, 255, .5);
+    box-shadow: 0 0 .4em rgba(0, 0, 255, .5);
+}
+
+body {
+    text-align: left;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 10px;
+    margin: 0 auto;
+    padding: 5rem 1rem;
+    padding-bottom: 2rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+#brand-logo{
+    width: 3.6rem;
+}
+
+#filter-container {
+    position: fixed;
+    top: .8em;
+    right: 6.5em;
+}
+
+#search-input{
+    display: none;
+    color: white;
+    background-color: black;
+    border-color: silver;
+    font-size: 1.5em;
+    text-shadow: 0 0 2px #424242;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+
+.accesskey{
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.btn-circle {
+  width: 3.6rem;
+  height: 3.6rem;
+  text-align: center;
+  padding: .6rem;
+  font-size: 1.4rem;
+  line-height: 1.428571429;
+  border-radius: 1.8rem;
+  text-shadow: 0 0 .4rem silver;
+}
+
+.btn-circle.btn-lg {
+  width: 5rem;
+  height: 5rem;
+  padding: 1.3rem 1.3rem;
+  font-size: 1.8rem;
+  line-height: 1.33;
+  border-radius: 2.5rem;
+}
+
+.btn-inverse {
+  color: white;
+  border-color: #424242;
+}
+
+.btn-right {
+  float: right;
+  position: relative;
+  top: .5rem;
+  color: inherit;
+
+  cursor: pointer;
+  background: 0 0;
+  border: .1;
+
+  font-weight: 700;
+  color: #000;
+}
+.btn-invisible {
+  text-shadow: 0 0 .4rem silver;
+  filter: alpha(opacity=20);
+  opacity: .2;
+}
+
+.btn-invisible:hover{
+  filter: none;
+  opacity: 1;
+  box-shadow: 0 0 .4em silver;
+}
+
+.title {
+  font-weight: bold;
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}

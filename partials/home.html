@@ -1,81 +1,95 @@
-<div class="container-fluid">
-    <div class="row">        
-          <div class="main">
-              <h1 class="page-header">Dashboard</h1>
-    
-              <h2 class="sub-header">Clientes </h2>
-              
-              <div class="container-fluid">
-                  <div class="dashboard">
-                        <div ng-repeat="cliente in listViewClientes | filter: filter | orderBy: sortBy" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" >
-                            <button class="square imgdash"  data-toggle="modal" data-target="#clienteModal" data-ng-click="setMaster(item)">
-                                <div class="contentdash">                                     
-                                      <p><span class="badge alert-info squaretitle">{{cliente.nome}}</span> </p>                                                                                 
-                                      <i class="fa fa-user icon"></i>                                      
-                                      <p>
-                                        <label class="label label-success" data-ng-if="cliente.tipoCliente[0]">Propriet&aacute;rio</label>
-                                        <label class="label label-warning" data-ng-if="cliente.tipoCliente[1]">Locat&aacute;rio</label>
-                                        <label class="label label-danger" data-ng-if="cliente.tipoCliente[2]">Fiador</label>
-                                      </p>                                      
-                                      <p></p>                                      
-                                </div>
-                            </button>
-                        </div>
-                  </div>
-              </div>
-          </div>	  
-          <h2 class="sub-header">Eventos Inclu&iacute;dos</h2>
-          <div class="table-responsive">
-            <table class="table table-striped tabledash">
-                <thead>
-                  <tr>
-                    <th class="col-xs-2 text-center">				  
-                      <a data-ng-click="sortBy='prop'; reverse=!reverse" role="button">
-                        Propriet&aacute;rio
-                      </a><a data-ng-show="sortBy=='prop'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
-                    </th>
-                    <th class="col-xs-2 text-center">				  
-                      <a data-ng-click="sortBy='inq'; reverse=!reverse" role="button">
-                        Inquilino
-                      </a><a data-ng-show="sortBy=='inq'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>					
-                    </th>				
-                    <th class="col-xs-1 text-center">
-                      <a data-ng-click="sortBy='tipo'; reverse=!reverse" role="button">
-                        Tipo Evento          
-                      </a><a data-ng-show="sortBy=='tipo'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
-                    </th>
-                    <th class="col-xs-3 text-center">
-                      <a data-ng-click="sortBy='descricao'; reverse=!reverse" role="button">
-                      Ação
-                      </a><a data-ng-show="sortBy=='descricao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
-                    </th>
-                    <th class="col-xs-1 text-center">
-                      <a data-ng-click="sortBy='situacao'; reverse=!reverse" role="button">
-                      Situa&ccedil;&atilde;o
-                      </a><a data-ng-show="sortBy=='situacao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
-                    </th>				
-                    <th class="col-xs-2 text-center">
-                      <a data-ng-click="sortBy='dataVencimento'; reverse=!reverse" role="button">
-                      Dt. Vencimento
-                      </a><a data-ng-show="sortBy=='dataVencimento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
-                    </th>	
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="item in listViewEventos | filter: filter | orderBy: sortBy" class="clickpointer" data-toggle="modal" data-target="#eventoModal" data-ng-class="{active : isSelected(item), danger: (item.situacao === 'vencido'), warning: (item.situacao === 'avencer')}" data-ng-click="setMaster(item)">       
-                      <td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">
-                          <strong>{{item.proprietario.nome}}</strong> 
-                      </td>
-                      <td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.inquilino.nome}}</td>
-                      <td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.tipo}}</td>
-                      <td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.descricao}}</td>				
-                      <td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.situacao}}</td>
-                      <td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.dataVencimento}}</td>                      
-                  </tr>
-                </tbody>
-            </table>
-          </div>
-    </div>    
+<div id="main">
+  <section>
+    <h2 class="sub-header"> <a href="./cadastro/clientes" class="alert-link">Clientes</a>
+      <a href="./cadastro/clientes/new" class="btn btn-success btn-circle btn-invisible" id="search-button" title="Incluir Clientes" >
+        <i class="fa fa-user-plus"></i>
+      </a>
+    </h2>
+    <div class="well" data-ng-hide="listViewClientes.length">
+      Não há Clientes cadastrados
+    </div>
+    <ul class="element-container" data-ng-show="listViewClientes.length">
+        <li ng-animate="'animate'" ng-repeat="cliente in listViewClientes | filter: filter | orderBy: sortBy track by $index " >
+          <a href="./cadastro/clientes/edit/{{cliente.cpf}}" accesskey="q" class="element">
+                  <div class="squaretext"><span class="badge">{{cliente.nome}}</span> </div>
+                  <div class="icon"><i class="fa fa-user fa-3x" aria-hidden="true"></i></div>
+                  <label class="squaretext label" data-ng-if="cliente.tipoCliente[0]">Propriet&aacute;rio</label>
+                  <label class="squaretext label" data-ng-if="cliente.tipoCliente[1]">Locat&aacute;rio</label>
+                  <label class="squaretext label" data-ng-if="cliente.tipoCliente[2]">Fiador</label>
+          </a>
+        </li>
+    </ul>
+            <!--<div ng-repeat="cliente in listViewClientes | filter: filter | orderBy: sortBy" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" >
+                <button class="square imgdash"  data-toggle="modal" data-target="#clienteModal" data-ng-click="setMaster(item)">
+                    <div class="contentdash">
+                          <p><span class="badge alert-info squaretitle">{{cliente.nome}}</span> </p>
+                          <i class="fa fa-user icon"></i>
+                          <p>
+                            <label class="label label-success" data-ng-if="cliente.tipoCliente[0]">Propriet&aacute;rio</label>
+                            <label class="label label-warning" data-ng-if="cliente.tipoCliente[1]">Locat&aacute;rio</label>
+                            <label class="label label-danger" data-ng-if="cliente.tipoCliente[2]">Fiador</label>
+                          </p>
+                          <p></p>
+                    </div>
+                </button>
+            </div>-->
+  </section>
+  <section>
+    <h3 class="sub-header">Eventos Inclu&iacute;dos</h3>
+    <div class="well" data-ng-hide="listViewEventos.length">
+      Não há eventos previstos
+    </div>
+    <div class="table-responsive" data-ng-show="listViewEventos.length">
+      <table class="table table-striped tabledash">
+          <thead>
+            <tr>
+              <th class="col-xs-2 text-center">
+                <a data-ng-click="sortBy='prop'; reverse=!reverse" role="button">
+                  Propriet&aacute;rio
+                </a><a data-ng-show="sortBy=='prop'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+              </th>
+              <th class="col-xs-2 text-center">
+                <a data-ng-click="sortBy='inq'; reverse=!reverse" role="button">
+                  Inquilino
+                </a><a data-ng-show="sortBy=='inq'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+              </th>
+              <th class="col-xs-1 text-center">
+                <a data-ng-click="sortBy='tipo'; reverse=!reverse" role="button">
+                  Tipo Evento
+                </a><a data-ng-show="sortBy=='tipo'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+              </th>
+              <th class="col-xs-3 text-center">
+                <a data-ng-click="sortBy='descricao'; reverse=!reverse" role="button">
+                Ação
+                </a><a data-ng-show="sortBy=='descricao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+              </th>
+              <th class="col-xs-1 text-center">
+                <a data-ng-click="sortBy='situacao'; reverse=!reverse" role="button">
+                Situa&ccedil;&atilde;o
+                </a><a data-ng-show="sortBy=='situacao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+              </th>
+              <th class="col-xs-2 text-center">
+                <a data-ng-click="sortBy='dataVencimento'; reverse=!reverse" role="button">
+                Dt. Vencimento
+                </a><a data-ng-show="sortBy=='dataVencimento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="item in listViewEventos | filter: filter | orderBy: sortBy" class="clickpointer" data-toggle="modal" data-target="#eventoModal" data-ng-class="{active : isSelected(item), danger: (item.situacao === 'vencido'), warning: (item.situacao === 'avencer')}" data-ng-click="setMaster(item)">
+                <td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">
+                    <strong>{{item.proprietario.nome}}</strong>
+                </td>
+                <td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.inquilino.nome}}</td>
+                <td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.tipo}}</td>
+                <td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.descricao}}</td>
+                <td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.situacao}}</td>
+                <td class="text-center	text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.dataVencimento}}</td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+  </section>
 </div>
 
 <div class="modal" id="eventoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -83,64 +97,64 @@
     <div class="modal-content">
             <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title-success text-capitalize" id="myModalLabel"><span class="label label-info">{{selected.id}}</span>&nbsp;&nbsp;{{selected.tipo}} - {{selected.titulo}}</h4>          
-          <a class="clickpointer" data-ng-click="criaPDF()" > <img src="/img/icons/pdf.png" width="24px"> PDF</a>
+          <h4 class="modal-title-success text-capitalize" id="myModalLabel"><span class="label label-info">{{selected.id}}</span>&nbsp;&nbsp;{{selected.tipo}} - {{selected.titulo}}</h4>
+          <a class="clickpointer" data-ng-click="criaPDF()" > <img src="./img/icons/pdf.png" width="24px"> PDF</a>
       </div>
       <div class="modal-body">
       	<div class="container-fluid export">
-      	  <div class="row">                
-                <div class="alert alert-success text-capitalize text-center"><strong>{{selected.situacao}}</strong></div>                
+      	  <div class="row">
+                <div class="alert alert-success text-capitalize text-center"><strong>{{selected.situacao}}</strong></div>
           </div>
-          <div class="row"> 
+          <div class="row">
             <div class="col-xs-offset-1 col-xs-4">
               <label>Inquilino:</label>
               <div class="well well-sm text-center">
                   <label>{{selected.inquilino.nome}}</label>
               </div>
             </div>
-            <div class="col-xs-offset-2 col-xs-4">              
+            <div class="col-xs-offset-2 col-xs-4">
               <label>Propriet&aacute;rio:</label>
               <div class="well well-sm text-center">
                   <label>{{selected.proprietario.nome}}</label>
               </div>
             </div>
           </div>
-          <div class="row"> 
+          <div class="row">
             <div class="col-xs-offset-1 col-xs-10">
               <label>Descri&ccedil;&atilde;o detalhada: </label>
               <div class="well">
-              
+
                     <label>{{selected.descricao}}</label>
               </div>
             </div>
-          </div>          
+          </div>
           <div class="row">
               <div class="col-xs-4">
                   <label for="cobranca" class="control-label" >Valor cobrado:  <a tootip-placement="right" tootip="Total cobrado do inquilino: Aluguel + Taxas" tootip-append-to-body="false" tootip-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
                   <div id="cobranca" class="well well-sm text-center">
                     <label >{{selected.cobranca}}</label>
                   </div>
-                  
+
                   <label for="totaltaxas" class="control-label">Total em taxas: <a popover-placement="right" popover="Soma do valor das taxas descritas ao lado" popover-append-to-body="false" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
                   <div id="totaltaxas" class="well well-sm text-center">
                       <label>{{selected.totaltaxas}}</label>
                   </div>
-                  
+
                   <label for="aluguel" class="control-label">Aluguel: <a popover-placement="right" popover="Valor do aluguel cobrado" popover-append-to-body="false" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
-                  <div id="aluguel" class="well well-sm text-center"> 
+                  <div id="aluguel" class="well well-sm text-center">
                     <label>{{selected.aluguel}}</label>
                   </div>
-              
+
                   <label for="comissao" class="control-label">Comissão: <a popover-placement="right" popover="Comissão de 8% do valor movimentado" popover-append-to-body="false" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
-                  <div id="comissao" class="well well-sm text-center"> 
+                  <div id="comissao" class="well well-sm text-center">
                     <label>{{selected.comissao}}</label>
                   </div>
-                            
+
                   <label for="deposito" class="control-label">Valor à depositar: <a popover-placement="top" popover="Valor restante à depositar para o proprietário" popover-append-to-body="true" popover-trigger="focus"><i class="fa fa-info-circle"></i></a></label>
                   <div id="deposito" class="well well-sm text-center">
                     <label>{{selected.deposito}}</label>
-                  </div>                  
-                  
+                  </div>
+
               </div>
               <div class="col-xs-8">
                   <div class="row">
@@ -149,20 +163,20 @@
                           <p class="bg-default text-center">
                               <label class="label label-info">{{selected.dataInicio}}</label>
                           </p>
-                      </div> 
-                      <div class="col-xs-6">                          
-                          <label><strong>Data de Vencimento:</strong></label>                  
+                      </div>
+                      <div class="col-xs-6">
+                          <label><strong>Data de Vencimento:</strong></label>
                           <p class="bg-default text-center">
                               <label class="label label-danger" data-ng-if="selected.situacao === 'vencido'"><strong>{{selected.dataVencimento}}</strong></label>
                               <label class="label label-warning" data-ng-if="selected.situacao === 'avencer'"><strong>{{selected.dataVencimento}}</strong></label>
-                              <label class="label label-success" data-ng-if="selected.situacao === 'ativo'"><strong>{{selected.dataVencimento}}</strong></label>                      
+                              <label class="label label-success" data-ng-if="selected.situacao === 'ativo'"><strong>{{selected.dataVencimento}}</strong></label>
                           </p>
                       </div>
-                  </div>  
+                  </div>
                   <label for="listataxas" class="control-label">Detalhamento das Taxas:</label>
                   <table id="listataxas" class="table table-bordered table-striped">
                       <thead>
-                        <tr>				
+                        <tr>
                           <th class="col-xs-4 text-center">
                             Tipo de taxa
                           </th>
@@ -174,8 +188,8 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody>			
-                        <tr data-ng-repeat="item in selected.listaTaxas">				
+                      <tbody>
+                        <tr data-ng-repeat="item in selected.listaTaxas">
                           <td class="text-center text-capitalize">
                             <label>{{item.tipo}}</label>
                           </td>
@@ -188,13 +202,12 @@
                       </tbody>
                   </table>
               </div>
-          </div> 
+          </div>
         </div>
-      </div>      
+      </div>
     </div>
   </div>
 </div>
-
 
 <div class="modal" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -205,7 +218,7 @@
       </div>
       <div class="modal-body">
       	<div class="container-fluid">
-      	  <div class="well">			
+      	  <div class="well">
                 <div>
                   <span class="label label-info">Informa&ccedil;&otilde;es B&aacute;sicas</span>
                   <br/>
@@ -214,27 +227,27 @@
                     <li>Vig&ecirc;ncia: {{selected.dataInicio}} - {{selected.dataVencimento}}</li>
                     <li>&Uacute;ltima Altera&ccedil;&atilde;o: {{selected.updated}}</li>
                   </ul>
-                </div>               
-          </div>      	
-      	  <div class="well">			
+                </div>
+          </div>
+      	  <div class="well">
                 <div>
                   <span class="label label-info">Im&oacute;vel</span>
                   <br>
                   <ul class="list-inline">
                     <li>{{selected.imovel}}</li>
                   </ul>
-                </div>               
+                </div>
           </div>
-      		<div class="well">			
+      		<div class="well">
                 <div>
                   <span class="label label-info">Locadores</span>
                   <br>
                   <ul class="list-inline">
                     <li data-ng-repeat="locad in selected.locadores">{{locad.tipo}}<span class="badge">{{locad.cpf}}</span></li>
                   </ul>
-                </div>               
-          </div>		
-          <div class="well">          
+                </div>
+          </div>
+          <div class="well">
                 <div>
                   <span class="label label-info">Locat&aacute;rios</span>
                   <br>
@@ -243,7 +256,7 @@
                   </ul>
                 </div>
           </div>
-		
+
           <div class="well">
                 <div>
                   <span class="label label-info">Fiadores</span>
@@ -252,29 +265,29 @@
                     <li data-ng-repeat="fiador in selected.fiadores">{{fiador.tipo}}<span class="badge">{{fiador.cpf}}</span></li>
                   </ul>
                 </div>
-          </div>		
+          </div>
           <div class="row">
               <div class="well col-md-12">
                 <span class="label label-info col-md-2">Documentos</span>
                 <div class="btn-group" data-ng-class="{open: open}">
                   <button class="btn">Filtrar: </button>
                   <button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span>
-                  
+
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                       <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>
-                  
+
                       </li>
                       <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>
-                  
+
                       </li>
                       <li class="divider"></li>
-                      <li data-ng-repeat="tipoDoc in tipoDocList" data-ng-init="checkAll()" >				    	
+                      <li data-ng-repeat="tipoDoc in tipoDocList" data-ng-init="checkAll()" >
                     <a data-ng-click="setSelectedDocTypes()" >{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i>
-                    </a>	
+                    </a>
                       </li>
                   </ul>
-                </div>		
+                </div>
                 <table class="table table-hover table-striped">
                 <thead>
                     <tr>
@@ -294,12 +307,12 @@
                   <td><a href="{{documento.link}}"><i class="fa fa-file-o fa-2x"></i> </a></td>
                     </tr>
                 </tbody>
-                </table>		 
+                </table>
               </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">		
+      <div class="modal-footer">
       </div>
     </div>
   </div>

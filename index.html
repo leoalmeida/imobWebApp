@@ -1,167 +1,171 @@
 <!DOCTYPE html>
 <html lang="pt-br" ng-app="imobDbApp" >
 <head>
-    <base href="/">
+    <base href="/imobWebApp/">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Leonardo Almeida">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+  	<meta name="form-detection" content="telephone=no" />
+    <meta name="x-rim-auto-match" content="none" forua="true" />
+    <meta name="description" content=""/>
+    <meta name="author" content="Leonardo Almeida"/>
 
     <title>Imob</title>
 
-    <!-- Bootstrap core CSS -->    
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    
+    <!-- Bootstrap core CSS -->
+    <link rel= "stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel= "stylesheet" href="./css/font-awesome.min.css">
+
     <!-- Custom styles for this template -->
     <!--<link rel="stylesheet" href="/css/dropzone.css"/>-->
-    <link rel="stylesheet" href="/css/dashboard.css"/>
-    <link rel="stylesheet" href="/css/calc.css"/>
-  
-    <link rel="shortcut icon" href="/img/patinhas.png" />
-    <link rel="icon" type="./image/ico" href="/img/patinhas.png" />
-  
+    <link rel= "stylesheet" href="./css/index.css"/>
+    <link rel= "stylesheet" href="./css/home.css"/>
+    <link rel= "stylesheet" href="./css/forms.css"/>
+    <link rel= "stylesheet" href="./css/dashboard.css"/>
+    <link rel= "stylesheet" href="./css/calc.css"/>
+
+    <link rel= "shortcut icon" href="./img/patinhas.png" />
+    <link rel= "icon" type="./image/ico" href="./img/patinhas.png" />
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery-ui.custom.min.js"></script>
-    <script src= "/js/underscore.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src= "/js/jquery.mask.min.js"></script>
-    <script src= "/js/jquery.easing.min.js"></script>
-    
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/js/ie10-viewport-bug-workaround.js"></script>
-    
-    <!-- Angular JS scripts -->
-    <script src="/js/angularjs/1.2.28/angular.min.js"></script>
-    <script src="/js/angularjs/1.2.28/angular-resource.min.js"></script>
-    <script src="/js/angularjs/1.2.28/angular-route.min.js"></script>
-    <script src="/js/angularjs/1.2.28/angular-animate.js"></script>
-    
-    <script src="/js/ui-bootstrap.min.js"></script>
-    <script src="/js/hammer.min.js"></script>		
-    <script src="/js/gestures.min.js"></script>		
-    <!--<script src="/js/dropzone.js"></script>-->    
-    
-    <!-- Angular JS Custom scripts -->
-    <script src="js/util.js"></script>
-    <script src="js/dnd.js"></script>
-    <script src="js/upload.js"></script>
-    <script src="js/gdocs.js"></script>
-        
-    <script src= "/js/angular-indexed-db.min.js"></script>
-    <script src= "/js/app.js"></script>
-    
-    <!--<script src="/js/dropzoneCtrls.js"></script>  
-    <script src= "/js/loginCtrls.js"></script>
-    <script src= "/js/syncCtrls.js"></script>--> 
-    <script src= "/js/controllers.js"></script>	
-    <script src= "/js/calculadoraCtrls.js"></script>
+    <script src= "./js/jquery.min.js"></script>
+    <script src= "./js/jquery-ui.custom.min.js"></script>
+    <script src= "./js/underscore.min.js"></script>
+    <script src= "./js/bootstrap.min.js"></script>
+    <script src= "./js/jquery.mask.min.js"></script>
+    <script src= "./js/jquery.easing.min.js"></script>
 
-    <script src= "/js/filters.js"></script>
-    <script src= "/js/services.js"></script>
-    <script src= "/js/directives.js"></script>
-    <script src= "/js/ngDraggable.js"></script>    	
-    
-    <!-- Calendar scripts -->	 	
-    <script src= "/js/calendar.js"></script>
-    <script src= "/js/calendarCtrls.js"></script>
-    <script src= "/js/moment.min.js"></script>	
-    <script src= "/js/fullcalendar.js"></script>
-    <script src="/js/gcal.js"></script>
-    <script src="/js/lang-all.js"></script>
-   
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src= "./js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- Angular JS scripts -->
+    <script src= "./js/angularjs/1.2.28/angular.min.js"></script>
+    <script src= "./js/angularjs/1.2.28/angular-resource.min.js"></script>
+    <script src= "./js/angularjs/1.2.28/angular-route.min.js"></script>
+    <script src= "./js/angularjs/1.2.28/angular-animate.js"></script>
+
+    <script src= "./js/ui-bootstrap.min.js"></script>
+    <script src= "./js/hammer.min.js"></script>
+    <script src= "./js/gestures.min.js"></script>
+    <!--<script src="./js/dropzone.js"></script>-->
+
+    <!-- Angular JS Custom scripts -->
+    <script src= "./js/scripts.js"></script>
+    <script src= "./js/util.js"></script>
+    <script src= "./js/dnd.js"></script>
+    <script src= "./js/upload.js"></script>
+    <script src= "./js/gdocs.js"></script>
+
+    <script src= "./js/angular-indexed-db.min.js"></script>
+    <script src= "./js/app.js"></script>
+
+    <!--<script src="./js/dropzoneCtrls.js"></script>
+    <script src= "./js/loginCtrls.js"></script>
+    <script src= "./js/syncCtrls.js"></script>-->
+    <script src= "./js/controllers.js"></script>
+    <script src= "./js/calculadoraCtrls.js"></script>
+
+    <script src= "./js/filters.js"></script>
+    <script src= "./js/services.js"></script>
+    <script src= "./js/directives.js"></script>
+    <script src= "./js/ngDraggable.js"></script>
+
+    <!-- Calendar scripts -->
+    <script src= "./js/calendar.js"></script>
+    <script src= "./js/calendarCtrls.js"></script>
+    <script src= "./js/moment.min.js"></script>
+    <script src= "./js/fullcalendar.js"></script>
+    <script src= "./js/gcal.js"></script>
+    <script src= "./js/lang-all.js"></script>
+
 </head>
 
 <body>
+  <header class="navbar navbar-inverse navbar-fixed-top" data-role="header">
+  	<nav data-role="navigation">
+  		<div class="container-fluid">
+  			<!-- Brand and toggle get grouped for better mobile display -->
+  			<div class="navbar-header">
+  				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+  					<span class="sr-only">Toggle navigation</span>
+  					<span class="icon-bar"></span>
+  					<span class="icon-bar"></span>
+  					<span class="icon-bar"></span>
+  				</button>
+  				<a href="./" class="navbar-brand">
+  					  <img alt="Brand" src="./img/gato.png" id="brand-logo" />
+  				</a>
+          <div id="filter-container" class="input-group" data-ng-hide="hidemenu">
+              <input id="search-input" class="form-control" type="search" size="14" results=5
+                     autosave="unique" placeholder="Pesquisar..." ng-model="filter" aria-describedby="search-button">
+              <a type="button" id="search-button" class="btn btn-circle btn-inverse input-group-addon">
+                <i class="fa fa-search"></i>
+              </a>
+          </div>
+  			</div>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">      		
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">	
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">				
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-        
-				<a href="./" class="navbar-brand">
-					<img src="/img/gato.png" style="height: 60px; width: 60px" />			
-				</a>
-			</div>
-			
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">	
-          <ul class="nav navbar-nav" data-ng-hide="hidemenu">				  
-            <li class="active"><a href="/"><i class="fa fa-home fa-fw"></i>&nbsp; Dashboard <span class="sr-only">(current)</span></a></li>					
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-database fa-fw"></i>&nbsp; Cadastro <span class="caret"></span></a>					  
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="cadastro/clientes"><i class="fa fa-group fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Clientes</a></li>
-                <li><a href="cadastro/eventos"><i class="fa fa-flag-o fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Eventos</a></li>
-                <li class="divider"></li>
-                <li><a href="/cadastro/imoveis"><i class="fa fa-building-o fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Im&oacute;veis</a></li>
-                <li><a href="/cadastro/contratos"><i class="fa fa-legal fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Contratos</a></li>
-                <li class="divider"></li>
-                <li><a href="/relatorios"><i class="fa fa-clipboard fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Relat&oacute;rios</a></li>
-                <li><a href="/biblioteca"><i class="fa fa-institution fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Biblioteca</a></li>
-              </ul>
-            </li>
-            <li><a href="/calendario"><i class="fa fa-calendar fa-fw"></i>&nbsp; Calendário</a></li>                
-            <!--  <li><a href="/profile"><i class="fa fa-users fa-fw"></i>&nbsp; Profile</a></li>-->
-            <li class="dropdown" ng-hide="true">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-calculator fa-fw"></i>&nbsp; Calculadoras <span class="caret"></span></a>					  
-              <ul class="dropdown-menu" role="menu">                		                
-                <li><a href="" data-toggle="modal" data-target="#calc-overlay" aria-expanded="false"><i class="fa fa-calculator fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp; Padr&atilde;o</a></li>
-                <li><a href="/calculadoras/emprestimo" ><i class="fa fa-list-ol fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp; Empr&eacute;stimo</a></li>               
-              </ul>
-            </li>
-            <li>
-                <a href="/login">                
-                  <i class="fa fa-cloud-upload fa-fw"></i>{{authButtonLabel()}}
-                </a>
-            </li>
-          </ul>
-          
-          <ul class="nav navbar-nav navbar-right" data-ng-hide="hidemenu">
-            <li>
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <i class="fa fa-search fa-inverse"></i>					
-                <input type="search" id="filterField" class="form-control" placeholder="Buscar..."  ng-model="filter">
-              </div>
-            </form>				
-            </li>
-            <li ng-hide="true">              
-              <a href="/logout"><i class="fa fa-sign-out fa-fw"></i>Logout</a>					  
-            </li>
-          </ul>
-			</div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-    <!-- <div ng-controller="pageStatusCtrl" class="navbar-right">
-        <span class="label label-default" id='status' >{{page-status}}</span>        
-    </div> -->
-  </nav>
+  			<!-- Collect the nav links, forms, and other content for toggling -->
+  			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" data-ng-hide="hidemenu">
+              <li class="active"><a href="./"><i class="fa fa-home fa-fw"></i>&nbsp; Dashboard <span class="sr-only">(current)</span></a></li>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-database fa-fw"></i>&nbsp; Cadastro <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="./cadastro/clientes"><i class="fa fa-group fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Clientes</a></li>
+                  <li><a href="./cadastro/eventos"><i class="fa fa-flag-o fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Eventos</a></li>
+                  <li class="divider"></li>
+                  <li><a href="./cadastro/imoveis"><i class="fa fa-building-o fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Im&oacute;veis</a></li>
+                  <li><a href="./cadastro/contratos"><i class="fa fa-legal fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Contratos</a></li>
+                  <li class="divider"></li>
+                  <li><a href="./relatorios"><i class="fa fa-clipboard fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Relat&oacute;rios</a></li>
+                  <li><a href="./biblioteca"><i class="fa fa-institution fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Biblioteca</a></li>
+                </ul>
+              </li>
+              <li><a href="./calendario"><i class="fa fa-calendar fa-fw"></i>&nbsp; Calendário</a></li>
+              <!--  <li><a href="/profile"><i class="fa fa-users fa-fw"></i>&nbsp; Profile</a></li>-->
+              <li class="dropdown" ng-hide="true">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-calculator fa-fw"></i>&nbsp; Calculadoras <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="" data-toggle="modal" data-target="#calc-overlay" aria-expanded="false"><i class="fa fa-calculator fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp; Padr&atilde;o</a></li>
+                  <li><a href="./calculadoras/emprestimo" ><i class="fa fa-list-ol fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp; Empr&eacute;stimo</a></li>
+                </ul>
+              </li>
+              <li>
+                  <a href="./login">
+                    <i class="fa fa-cloud-upload fa-fw"></i>{{authButtonLabel()}}
+                  </a>
+              </li>
+            </ul>
+  			</div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+      <!-- <div ng-controller="pageStatusCtrl" class="navbar-right">
+          <span class="label label-default" id='status' >{{page-status}}</span>
+      </div> -->
+    </nav>
+  </header>
 
 	<div class="container-fluid">
-	<div class="col-sm-12 col-md-12 col-lg-12 main">
-	
-	<div ng-view></div>
-	
+    <div class="row">
+	    <div class="col-sm-12 col-md-12 col-lg-12 main">
+	      <div ng-view></div>
+      </div>
+    </div>
 	</div>
-	</div>
-	
+
+  <footer class="navbar-default navbar-fixed-bottom" data-role="footer">
+       <p>
+           @ImobPage 2016
+       </p>
+   </footer>
 	<!-- Login Overlay modal-->
-	<!-- 
+	<!--
 	<div class="modal" id="login-overlay" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
-		<div class="modal-dialog">	
+		<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">			
+			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel">Conectar na Aplicação</h4>
 			</div>
@@ -191,23 +195,23 @@
 				      <a href="/forgot/" class="btn btn-default btn-block">Help to login</a>
 				  </form>
 			      </div>
-			</div>	  
+			</div>
 			</div>
 			</div>
 		</div>
 		</div>
 	</div>
 
-	
+
 	<div class="modal" id="calc-overlay" tabindex="-1" role="dialog" aria-labelledby="calc-modal" aria-hidden="true">
-		<div class="modal-dialog">	
+		<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">			
+			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel">Calculadora</h4>
 			</div>
 			<div class="modal-body">
-			  <div ng-controller="calculadoraController" bn-document-keypress="handleKeypress($event)" class="ng-scope"> 
+			  <div ng-controller="calculadoraController" bn-document-keypress="handleKeypress($event)" class="ng-scope">
         <div class="clearfix" >
           <form>
             <div id="calculator" class="calc">
@@ -244,6 +248,6 @@
     </div>
     </div>
   </div>
-	 --> 
+	 -->
 </body>
 </html>

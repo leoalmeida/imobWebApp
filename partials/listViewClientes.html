@@ -1,90 +1,122 @@
-<div class="col-sm-12 col-md-12 col-lg-12" >
+<div id="main">
   <ol class="breadcrumb">
-        <li><a href="/">Imobcat</a></li>
+        <li><a href="./">Imobcat</a></li>
         <li>Cadastro</li>
         <li class="active">Clientes</li>
   </ol>
-	<h1 class="sub-header">{{entidade}}</h1>
-		
-	<div class="btn-group">
-		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+
+ 	<div class="btn-group">
+		<button class="btn btn-warning btn-sm btn-invisible dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
 		<ul class="dropdown-menu " role="menu">
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'false'});"> <img src="/img/icons/json.png" width="24px"> JSON</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"> <img src="/img/icons/json.png" width="24px"> JSON (ignoreColumn)</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'true'});"> <img src="/img/icons/json.png" width="24px"> JSON (with Escape)</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'false'});"> <img src="./img/icons/json.png" width="24px"> JSON</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"> <img src="./img/icons/json.png" width="24px"> JSON (ignoreColumn)</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'json',escape:'true'});"> <img src="./img/icons/json.png" width="24px"> JSON (with Escape)</a></li>
         <li class="divider"></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'xml',escape:'false'});"> <img src="/img/icons/xml.png" width="24px"> XML</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'sql'});"> <img src="/img/icons/sql.png" width="24px"> SQL</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'xml',escape:'false'});"> <img src="./img/icons/xml.png" width="24px"> XML</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'sql'});"> <img src="./img/icons/sql.png" width="24px"> SQL</a></li>
         <li class="divider"></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'csv',escape:'false'});"> <img src="/img/icons/csv.png" width="24px"> CSV</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'txt',escape:'false'});"> <img src="/img/icons/txt.png" width="24px"> TXT</a></li>
-        <li class="divider"></li>				
-        
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'excel',escape:'false'});"> <img src="/img/icons/xls.png" width="24px"> XLS</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'doc',escape:'false'});"> <img src="/img/icons/word.png" width="24px"> Word</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'powerpoint',escape:'false'});"> <img src="/img/icons/ppt.png" width="24px"> PowerPoint</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'csv',escape:'false'});"> <img src="./img/icons/csv.png" width="24px"> CSV</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'txt',escape:'false'});"> <img src="./img/icons/txt.png" width="24px"> TXT</a></li>
         <li class="divider"></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'png',escape:'false'});"> <img src="/img/icons/png.png" width="24px"> PNG</a></li>
-        <li><a href="#" onclick="$('#accordion').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> <img src="/img/icons/pdf.png" width="24px"> PDF</a></li>			
+
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'excel',escape:'false'});"> <img src="./img/icons/xls.png" width="24px"> XLS</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'doc',escape:'false'});"> <img src="./img/icons/word.png" width="24px"> Word</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'powerpoint',escape:'false'});"> <img src="./img/icons/ppt.png" width="24px"> PowerPoint</a></li>
+        <li class="divider"></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'png',escape:'false'});"> <img src="./img/icons/png.png" width="24px"> PNG</a></li>
+        <li><a href="#" onclick="$('#accordion').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> <img src="./img/icons/pdf.png" width="24px"> PDF</a></li>
 		</ul>
 	</div>
-	<table class="table table-bordered table-striped" id="accordion" ng-init="cliente=true">
+
+  <div class="panel panel-default"data-ng-hide="false">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h1 class="panel-title">
+        <a type="button" href="#" data-ng-click="sortBy='nome'; reverse=!reverse" role="button" >
+        {{entidade}}
+        </a>
+        <a data-ng-show="sortBy=='nome'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+      </h1>
+    </div>
+
+    <table class="table table-hover">
+      <tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" class="list-group">
+        <td class="list-group-item">
+          <a class="btn btn-danger btn-circle btn-right btn-invisible" aria-label="Remover Item"
+                data-ng-click="removeCliente(item.cpf)"><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i></a>
+
+          <span class="clearfix">
+            <a href="./cadastro/clientes/edit/{{item.cpf}}"> <!--class="alert-link"-->
+              <h4 class="list-group-item-heading">{{item.nome}}</h4>
+              <div class="list-group-item-text">
+                CPF: {{item.cpf + '\n'}}
+              </div>
+              <div class="list-group-item-text">
+                Última Alteração: {{item.updated}}
+              </div>
+            </a>
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <table class="table table-sm table-striped" id="accordion" ng-init="cliente=true" data-ng-hide="true">
 		<thead>
 			<tr>
-			  <th class="col-xs-2 col-md-2 text-center">				  
+			  <th class="col-xs-2 col-md-2 text-center" >
 					<a data-ng-click="sortBy='cpf'; reverse=!reverse" role="button">
             CPF
-          </a><a data-ng-show="sortBy=='cpf'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>          					
-				</th>				
-				<th class="col-xs-6 col-md-6 text-center">				  
+          </a><a data-ng-show="sortBy=='cpf'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>
+				<th class="col-xs-6 col-md-6 text-center" >
 					<a data-ng-click="sortBy='nome'; reverse=!reverse" role="button">
             Nome
-          </a><a data-ng-show="sortBy=='nome'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>          					
-				</th>				
-				<th class="col-xs-2 col-md-2 text-center">				  
+          </a><a data-ng-show="sortBy=='nome'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+				</th>
+				<th class="col-xs-2 col-md-2 text-center" >
 					<a data-ng-click="sortBy='updated'; reverse=!reverse" role="button">
             Altera&ccedil;&atilde;o
-          </a><a data-ng-show="sortBy=='updated'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>          					
+          </a><a data-ng-show="sortBy=='updated'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
 				</th>
-				<th class="col-xs-2 col-md-2 text-center">
-					<div class="inline">					
-						<a href="/cadastro/clientes/new" class="btn btn-success btn-sm"><i class="fa fa-plus fa-fw fa-inverse"></i>&nbsp;Incluir</a>
-					</div>	
+				<th class="col-xs-2 text-center">
+					<div class="block">
+						<a href="./cadastro/clientes/new" class="btn btn-success btn-sm"><i class="fa fa-plus fa-fw fa-inverse"></i>&nbsp;Incluir</a>
+					</div>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="accordion-toggle" data-target="#collapse{{item.cpf}}" > -->
-			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">							  
-          <td class="text-center clickpointer"  class="title" data-toggle="modal" data-target="#myModal">{{item.cpf}}</td>				
-          <td class="text-center	text-capitalize clickpointer"  data-toggle="modal" data-target="#myModal">{{item.nome}}</td>				
-          <td class="text-center	text-capitalize clickpointer"  data-toggle="modal" data-target="#myModal">{{item.updated}}</td>
-          <td class="text-center">            
-            <a class="btn btn-primary btn-sm" href="/cadastro/clientes/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Alterar</a>
-            <a class="btn btn-danger btn-sm ng-hide" data-ng-click="removeCliente(item.cpf)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>					
+			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
+          <td class="text-center clickpointer"  class="title" >{{item.cpf}}</td>
+          <td class="text-center	text-capitalize clickpointer" >{{item.nome}}</td>
+          <td class="text-center	text-capitalize clickpointer" >{{item.updated}}</td>
+          <td class="text-center" >
+            <!--<a class="btn btn-primary btn-sm" href="./cadastro/clientes/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Alterar</a>-->
+            <a class="btn btn-danger btn-sm ng-hide" data-ng-click="removeCliente(item.cpf)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
           </td>
 			</tr>
-			<!-- 
+			<!--
 			<tr data-ng-repeat-end>
-				<td colspan="4" class="hiddenRow">				
+				<td colspan="4" class="hiddenRow">
           <div class="accordion-body collapse" id="collapse{{item.cpf}}" >
               <h3>Documentos:</h3>
               <div class="btn-group" data-ng-class="{open: open}">
                   <button class="btn">Filtrar: </button>
                   <button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span>
-                
+
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                      <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>                
+                      <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>
                       </li>
-                      <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>                
+                      <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>
                       </li>
                       <li class="divider"></li>
-                      <li data-ng-repeat="tipoDoc in tipoDocList"> 
-                        <a data-ng-click="setSelectedDocTypes()">{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i></a>	
+                      <li data-ng-repeat="tipoDoc in tipoDocList">
+                        <a data-ng-click="setSelectedDocTypes()">{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i></a>
                       </li>
                   </ul>
-              </div>		
+              </div>
               <table class="table table-hover table-striped">
                   <thead>
                     <tr>
@@ -104,7 +136,7 @@
                       <td><a href="{{documento.link}}"><i class="fa fa-file-o fa-2x"></i> </a></td>
                     </tr>
                   </tbody>
-              </table>			    
+              </table>
           </div>
 				</td>
 			</tr>-->
@@ -121,7 +153,7 @@
       </div>
       <div class="modal-body">
           <div class="container-fluid">
-              <div class="well">              
+              <div class="well">
                   <div>
                       <span class="label label-info">Tipo</span>
                       <br>
@@ -134,25 +166,25 @@
                       <br>
                       <label>{{selected.email}}</label>
                   </div>
-              </div>            
-              <div class="well">            
+              </div>
+              <div class="well">
                   <div>
                     <span class="label label-info">Telefones</span>
                     <ul class="list-group">
                       <li class="list-group-item list-group-item-default" data-ng-repeat="telefone in selected.telefones">
-                        <p class="bg-default">{{telefone.tpTelefone}}: <span class="badge">{{telefone.nrTelefone}}</span></p>				
+                        <p class="bg-default">{{telefone.tpTelefone}}: <span class="badge">{{telefone.nrTelefone}}</span></p>
                       </li>
                     </ul>
                   </div>
               </div>
-            
+
               <div class="well">
                   <span class="label label-info">Endere&ccedil;os</span>
                   <br>
                   <ul class="list-group">
                       <li class="list-group-item list-group-item-default" data-ng-repeat="endereco in selected.enderecos">
                           <address class="well">
-                          <p class="lead	text-capitalize">{{endereco.tpEndereco}} - {{key+1}}</p>                          
+                          <p class="lead	text-capitalize">{{endereco.tpEndereco}} - {{key+1}}</p>
                           <label>{{endereco.rua}}</label>
                           <label>{{endereco.numero}}</label>
                           <label>/{{endereco.complemento}}</label>
@@ -160,14 +192,14 @@
                           <label>,{{endereco.bairro}}</label>
                           <br>
                           <label>{{endereco.cidade}}</label>
-                          <label>/{{endereco.estado}}</label>                          
+                          <label>/{{endereco.estado}}</label>
                           <label>, {{endereco.cep}}</label>
                           <label> - {{endereco.pais}}</label>
                           </address>
                       </li>
                   </ul>
               </div>
-            
+
               <div class="row">
                   <div class="well col-md-12">
                       <span class="label label-info col-md-2">Documentos</span>
@@ -175,16 +207,16 @@
                           <button class="btn">Filtrar: </button>
                           <button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span></button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                              <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>                          
+                              <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>
                               </li>
-                              <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>                          
+                              <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>
                               </li>
                               <li class="divider"></li>
-                              <li data-ng-repeat="tipoDoc in tipoDocList" data-ng-init="checkAll()" >				    	
-                                <a data-ng-click="setSelectedDocTypes()" >{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i></a>	
+                              <li data-ng-repeat="tipoDoc in tipoDocList" data-ng-init="checkAll()" >
+                                <a data-ng-click="setSelectedDocTypes()" >{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i></a>
                               </li>
                           </ul>
-                      </div>		
+                      </div>
                       <table class="table table-hover table-striped">
                         <thead>
                           <tr>
@@ -204,20 +236,20 @@
                             <td><a href="{{documento.link}}"><i class="fa fa-file-o fa-2x"></i> </a></td>
                           </tr>
                         </tbody>
-                      </table>		 
+                      </table>
                   </div>
               </div>
           </div>
       </div>
-      <div class="modal-footer">		
+      <div class="modal-footer">
       </div>
     </div>
   </div>
 </div>
 
-<script type="text/javascript" src="/js/tableExport.js"></script>
-<script type="text/javascript" src="/js/jquery.base64.js"></script>
-<script type="text/javascript" src="/js/html2canvas.js"></script>
-<script type="text/javascript" src="/js/jspdf/libs/sprintf.js"></script>
-<script type="text/javascript" src="/js/jspdf/jspdf.js"></script>
-<script type="text/javascript" src="/js/jspdf/libs/base64.js"></script>
+<script type="text/javascript" src="./js/tableExport.js"></script>
+<script type="text/javascript" src="./js/jquery.base64.js"></script>
+<script type="text/javascript" src="./js/html2canvas.js"></script>
+<script type="text/javascript" src="./js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="./js/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="./js/jspdf/libs/base64.js"></script>

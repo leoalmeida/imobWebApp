@@ -1,19 +1,19 @@
 /* global angular,window */
-var imobDbApp = angular.module('imobDbApp', ['angular-gestures', 
-                                              'ngRoute', 
+var imobDbApp = angular.module('imobDbApp', ['angular-gestures',
+                                              'ngRoute',
                                               'ngResource',
-                                              'imobDbControllers', 
-                                              'imobDbFilters', 
-                                              'imobDbServices', 
+                                              'imobDbControllers',
+                                              'imobDbFilters',
+                                              'imobDbServices',
                                               'imobDbDirectives',
-                                              'loginDbControllers',                                               
-                                              'calcController', 
-                                              'calendarDbControllers', 
-                                              'syncDbControllers', 
+                                              'loginDbControllers',
+                                              'calcController',
+                                              'calendarDbControllers',
+                                              'syncDbControllers',
                                               'dropzone'
                                               ]);
 
- 
+
 var dropzone = angular.module('dropzone', []);
 var imobDbControllers = angular.module('imobDbControllers', ['ui.bootstrap', 'ngResource', 'ngAnimate', 'indexedDB']);
 var imobDbFilters = angular.module('imobDbFilters', []);
@@ -37,134 +37,134 @@ options.api.msgs = {"nottosync":{text:"Não há informações para sincronizar",
 imobDbApp.config( [
     '$compileProvider',
     function( $compileProvider )
-    {   
+    {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto):/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob|filesystem):/);
     }
 ]);
-              
+
 imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',
 	function($routeProvider , $locationProvider, hammerDefaultOptsProvider)
 	{
 	    $routeProvider.
 		  when('/home', {
 				templateUrl: 'partials/home.html',
-				controller: 'HomeCtrl'			
+				controller: 'HomeCtrl'
 			}).
       when('/upload', {
-        templateUrl: '/partials/login.html',
+        templateUrl: 'partials/login.html',
         controller: 'AdminUserCtrl',
-        css: '/css/login.css'
+        css:'css/login.css'
       }).
       when('/login', {
-        templateUrl: '/partials/login.html',
+        templateUrl:'partials/login.html',
         controller: 'AdminUserCtrl',
-        css: '/css/login.css'
+        css:'css/login.css'
       }).
       when('/logout', {
-          templateUrl: '/partials/logout.html',
+          templateUrl:'partials/logout.html',
           controller: 'AdminUserCtrl'
       }).
       when('/sync', {
-				templateUrl: '/partials/sync.html',
+				templateUrl:'partials/sync.html',
 				controller: 'syncCtrl'
 			}).
-			when('/biblioteca', {  
+			when('/biblioteca', {
 				templateUrl: 'partials/biblioteca.html',
 				controller: 'BibliotecaCtrl',
-				css: '/css/gdocs.css'
+				css:'css/gdocs.css'
 			}).
-			when('/boleto', { 
-				templateUrl: '/partials/formNewBoleto.html'
+			when('/boleto', {
+				templateUrl:'partials/formNewBoleto.html'
 				//controller: 'BoletosCtrl'
 			}).
-			when('/cadastro/clientes', { 
-				templateUrl: '/partials/listViewClientes.html',
+			when('/cadastro/clientes', {
+				templateUrl:'partials/listViewClientes.html',
 				controller: 'ClientesCtrl'
 			}).
-			when('/cadastro/clientes/new', {  
-				templateUrl: '/partials/formNewClientes.html',
+			when('/cadastro/clientes/new', {
+				templateUrl:'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'
 			}).
-			when('/cadastro/clientes/edit/:id', { 
-				templateUrl: '/partials/formNewClientes.html',
+			when('/cadastro/clientes/edit/:id', {
+				templateUrl:'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'
 			}).
-			when('/cadastro/imoveis', { 
-				templateUrl: '/partials/listViewImoveis.html',
+			when('/cadastro/imoveis', {
+				templateUrl:'partials/listViewImoveis.html',
 				controller: 'ImoveisCtrl'
 			}).
-			when('/cadastro/imoveis/new', {  
-				templateUrl: '/partials/formNewImoveis.html',
-				controller: 'ImoveisEditCtrl'	
-			}).
-			when('/cadastro/imoveis/edit/:id', {
-				templateUrl: '/partials/formNewImoveis.html',
+			when('/cadastro/imoveis/new', {
+				templateUrl:'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl'
 			}).
-			when('/cadastro/contratos', { 
-				templateUrl: '/partials/listViewContratos.html',
+			when('/cadastro/imoveis/edit/:id', {
+				templateUrl:'partials/formNewImoveis.html',
+				controller: 'ImoveisEditCtrl'
+			}).
+			when('/cadastro/contratos', {
+				templateUrl:'partials/listViewContratos.html',
 				controller: 'ContratosCtrl'
 			}).
-			when('/cadastro/contratos/new', {  
-				templateUrl: '/partials/formNewContratos.html',
-				controller: 'ContratosEditCtrl'			
-			}).
-			when('/cadastro/contratos/edit/:id', {
-				templateUrl: '/partials/formNewContratos.html',
+			when('/cadastro/contratos/new', {
+				templateUrl:'partials/formNewContratos.html',
 				controller: 'ContratosEditCtrl'
 			}).
-			when('/cadastro/eventos', { 
-				templateUrl: '/partials/listViewEventos.html',
+			when('/cadastro/contratos/edit/:id', {
+				templateUrl:'partials/formNewContratos.html',
+				controller: 'ContratosEditCtrl'
+			}).
+			when('/cadastro/eventos', {
+				templateUrl:'partials/listViewEventos.html',
 				controller: 'EventosCtrl'
 			}).
-			when('/cadastro/eventos/new', {  
-				templateUrl: '/partials/formNewEventos.html',
-				controller: 'EventosEditCtrl'	
-			}).
-			when('/cadastro/eventos/edit/:id', {
-				templateUrl: '/partials/formNewEventos.html',
+			when('/cadastro/eventos/new', {
+				templateUrl:'partials/formNewEventos.html',
 				controller: 'EventosEditCtrl'
 			}).
-			when('/dashboard', {  
-				templateUrl: '/partials/home.html',
+			when('/cadastro/eventos/edit/:id', {
+				templateUrl:'partials/formNewEventos.html',
+				controller: 'EventosEditCtrl'
+			}).
+			when('/dashboard', {
+				templateUrl:'partials/home.html',
 				controller: 'ClientesCtrl'
 			}).
-			when('/calendario', {  
-				templateUrl: '/partials/calendario.html',
+			when('/calendario', {
+				templateUrl:'partials/calendario.html',
 				controller: 'CalendarCtrl',
-				css: '/css/calendar.css'
+				css:'css/calendar.css'
 			}).
-			when('/calculadoras/emprestimo', {  
-				templateUrl: '/partials/calculadoraEmprestimo.html',
+			when('/calculadoras/emprestimo', {
+				templateUrl:'partials/calculadoraEmprestimo.html',
 				controller: 'calculadoraCtrl'
-			}).						
+			}).
 			when('/unsupported', {
-				templateUrl: '/partials/unsupported.html'
+				templateUrl:'partials/unsupported.html'
 			}).
 			when('/404', {
-				templateUrl: '/partials/404.html',
-				css: '/css/404.css'
+				templateUrl:'partials/404.html',
+				css:'css/404.css'
 			}).
-			otherwise({			    
-        //templateUrl: '/partials/login.html',
+			otherwise({
+        //templateUrl:'partials/login.html',
         //controller: 'AdminUserCtrl',
-        //css: '/css/login.css',
-        //access: { requiredAuthentication: true }        
+        //css:'css/login.css',
+        //access: { requiredAuthentication: true }
 				templateUrl: 'partials/home.html',
 				controller: 'HomeCtrl'
 			});
-			
+
 		$locationProvider.html5Mode(true);
 		hammerDefaultOptsProvider.set({
         recognizers: [[Hammer.Tap, {time: 100}]]
-    });		
-    
-   
+    });
+
+
 	}
 ]);
 
-    
+
 // Init setup and attach event listeners.
 document.addEventListener('DOMContentLoaded', function(e) {
   // FILESYSTEM SUPPORT --------------------------------------------------------
@@ -201,7 +201,7 @@ function writeFile(blob) {
 
 
 /*
-imobDbApp.controller('pageStatusCtrl',  function($scope) {    
+imobDbApp.controller('pageStatusCtrl',  function($scope) {
     if (navigator.onLine) {
         $scope.page-status = "Online";
     }else {
@@ -211,25 +211,25 @@ imobDbApp.controller('pageStatusCtrl',  function($scope) {
 */
 
 /*
-imobDbApp.config(function ($httpProvider) {    
-    $httpProvider.interceptors.push('TokenInterceptor');    
+imobDbApp.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('TokenInterceptor');
 });
 */
 /*
-imobDbApp.run(function($rootScope, $location, $window, gdocs) { 
+imobDbApp.run(function($rootScope, $location, $window, gdocs) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-        if (nextRoute != null 
-                  && nextRoute.access != null 
-                  && nextRoute.access.requiredAuthentication 
+        if (nextRoute != null
+                  && nextRoute.access != null
+                  && nextRoute.access.requiredAuthentication
                   && !gdocs.accessToken) {
             $rootScope.hidemenu = true;
-            $location.path("/login").replace();            
+            $location.path("/login").replace();
         }
-        
-        if (nextRoute.access.requiredAuthentication 
-            && gdocs.accessToken){        
-            $rootScope.hidemenu = false;            
+
+        if (nextRoute.access.requiredAuthentication
+            && gdocs.accessToken){
+            $rootScope.hidemenu = false;
         }
-    });    
+    });
 });
 */
