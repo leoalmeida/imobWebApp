@@ -296,11 +296,61 @@ imobDbControllers.controller('BibliotecaCtrl', ['$scope', '$http', '$indexedDB',
 
 }]);
 
+imobDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB', 'PostService','FileReader','facebookService','ezfb',
+		function($scope,  $indexedDB,  PostService, FileReader, facebookService,ezfb) {
 
+	updateLoginStatus(updateApiMe);
 
+	$scope.login = function () {
+    /**
+     * Calling FB.login with required permissions specified
+     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
+     */
+    ezfb.login(function (res) {
+      /**
+       * no manual $scope.$apply, I got that handled
+       */
+      if (res.authResponse) {
+        updateLoginStatus(updateApiMe);
+      }
+    }, {scope: 'email,user_likes'});
+  };
 
-imobDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB', 'PostService','FileReader',
-		function($scope,  $indexedDB,  PostService, FileReader) {
+  $scope.logout = function () {
+    /**
+     * Calling FB.logout
+     * https://developers.facebook.com/docs/reference/javascript/FB.logout
+     */
+    ezfb.logout(function () {
+      updateLoginStatus(updateApiMe);
+    });
+  };
+
+	/* Update loginStatus result*/
+	function updateLoginStatus (more) {
+	 ezfb.getLoginStatus(function (res) {
+		 $scope.loginStatus = res;
+
+		 (more || angular.noop)();
+	 });
+	}
+
+	/**
+   * Update api('/me') result
+   */
+  function updateApiMe () {
+    ezfb.api('/me', function (res) {
+      $scope.apiMe = res;
+    });
+  }
+
+	$scope.getMyLastName = function() {
+	   facebookService.getMyLastName()
+	     .then(function(response) {
+	       $scope.nomeusuario = response.first_name +" "+ response.last_name;
+	     }
+	   );
+	};
 
   $scope.setMaster = function(section) {
 	    $scope.selected = section;

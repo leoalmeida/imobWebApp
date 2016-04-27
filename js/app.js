@@ -10,9 +10,9 @@ var imobDbApp = angular.module('imobDbApp', ['angular-gestures',
                                               'calcController',
                                               'calendarDbControllers',
                                               'syncDbControllers',
-                                              'dropzone'
+                                              'dropzone',
+                                              'ezfb'
                                               ]);
-
 
 var dropzone = angular.module('dropzone', []);
 var imobDbControllers = angular.module('imobDbControllers', ['ui.bootstrap', 'ngResource', 'ngAnimate', 'indexedDB']);
@@ -42,6 +42,13 @@ imobDbApp.config( [
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob|filesystem):/);
     }
 ]);
+
+imobDbApp.config(function (ezfbProvider) {
+  ezfbProvider.setLocale('pt_BR');
+  ezfbProvider.setInitParams({
+    appId: '1280795895282595'
+  });
+});
 
 imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',
 	function($routeProvider , $locationProvider, hammerDefaultOptsProvider)

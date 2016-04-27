@@ -5,12 +5,12 @@
     <div class="row vertical-offset-50">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">                            
-                  <span class="glyphicon glyphicon-lock"></span> Login                              
+                <div class="panel-heading">
+                  <span class="glyphicon glyphicon-lock"></span> Login
                 </div>
                 <div class="panel-body">
-                  <div class="row-fluid user-row">                                    
-                      <img src="/img/gato.png" class="img-responsive" alt="Console Admin" />	
+                  <div class="row-fluid user-row">
+                      <img src="/img/gato.png" class="img-responsive" alt="Console Admin" />
                   </div>
                   <form accept-charset="UTF-8" role="form" class="form-login">
                       <fieldset>
@@ -19,29 +19,30 @@
                           </label>
                           <input class="form-control" ng-model="login.username" placeholder="Username" id="inputUsername" type="text">
                           <input class="form-control" ng-model="login.password" placeholder="Password" id="inputPassword" type="password">
-                          
+
                           <div class="col-xs-6 col-sm-6 col-md-6 checkbox">
                             <label>
                                 <input type="checkbox"/> Lembre de mim
                             </label>
-                          </div>                          
-                          <br></br>                        
-                          <button id="authorize-button" class="btn btn-lg btn-success btn-block" data-ng-click="toggleAuth(true)">{{authButtonLabel()}}</button>                                                                           
+                          </div>
+                          <br></br>
+                          <button id="authorize-button" class="btn btn-lg btn-success btn-block" data-ng-click="toggleAuth(true)">{{authButtonLabel()}}</button>
+                          <button class="btn btn-primary" ng-click="login()" ng-disabled="loginStatus.status == 'connected'">Conecte com o Facebook</button>
                           <button class="btn btn-lg btn-info btn-block"  type="submit" data-toggle="modal" data-target="#signUpModal">Register »</button>
                       </fieldset>
-                  </form>                                                             
+                  </form>
                 </div>
                 <div class="panel-footer">Esqueceu a senha? <a href="/">Acesse aqui</a></div>
             </div>
-            
+
         </div>
     </div>
-    
+
 <div class="modal" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">             
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>          
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <div class="modal-body">
           <div class="container-fluid">
@@ -49,8 +50,8 @@
                      <li><a href="/">ImobCat</a></li>
                      <li class="active">Register</li>
               </ol>
-              <div class="well">            
-                                    
+              <div class="well">
+
                   <form class="form-horizontal" role="form">
                     <div class="form-group">
                       <label for="inputUsername" class="col-sm-4 control-label">Username</label>
@@ -71,19 +72,18 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <div class="col-sm-offset-4 col-sm-4">                        
+                      <div class="col-sm-offset-4 col-sm-4">
                         <button type="submit" class="btn btn-default btn-block" ng-click="signUp(signUp.username, signUp.password, signUp.passwordConfirmation)">Register</button>
                       </div>
                       <div class="col-sm-offset-4 col-sm-4">
                         <span class="label label-success" id="returnMsg" data-ng-model="returnMsg">{{returnMsg}}</span>
                       </div>
-                    </div>                    
+                    </div>
                   </form>
-                  
+
               </div>
           </div>
       </div>
     </div>
   </div>
 </div>
-
